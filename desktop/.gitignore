@@ -1,0 +1,4 @@
+node_modules
+bundle
+src-tauri/target
+src-tauri/gen

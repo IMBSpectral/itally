@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Spectral Tally</title>
+    <style>
+      :root { --bg: #f4f6f4; --ink: #1d2a26; --band: #0f5b52; --muted: #6b7a74; --err: #a12424; }
+      @media (prefers-color-scheme: dark) { :root { --bg: #121816; --ink: #e2ebe7; --band: #3cb9a6; --muted: #8fa29a; --err: #f2a3a3; } }
+      html, body { height: 100%; margin: 0; }
+      body { display: grid; place-items: center; background: var(--bg); color: var(--ink); font-family: 'Segoe UI', system-ui, sans-serif; }
+      .box { text-align: center; max-width: 560px; padding: 24px; }
+      h1 { color: var(--band); font-size: 22px; margin: 0 0 8px; }
+      p { color: var(--muted); margin: 0; }
+      .err { color: var(--err); white-space: pre-wrap; text-align: left; margin-top: 12px; font-size: 13px; }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h1>Spectral Tally</h1>
+      <p id="status">Starting…</p>
+      <div class="err" id="err"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1697 @@
+{
+  "source": "TallyPrime 1.1.7.2 (installed), menu tree + masters + voucher types + platform",
+  "features": [
+    {
+      "area": "Masters",
+      "name": "Group",
+      "tier": 3,
+      "tally": "Create > Group",
+      "status": "done",
+      "note": "create, alter, delete; nature follows parent",
+      "id": 1
+    },
+    {
+      "area": "Masters",
+      "name": "Ledger",
+      "tier": 3,
+      "tally": "Create > Ledger",
+      "status": "done",
+      "note": "name, group, opening, GSTIN/state, PAN, mailing name/address/PIN/country/phone/e-mail, bill-wise, credit period, opening bills, cost centres, interest",
+      "id": 2
+    },
+    {
+      "area": "Masters",
+      "name": "Voucher Type",
+      "tier": 2,
+      "tally": "Create > Voucher Type",
+      "status": "done",
+      "note": "Own voucher types under a predefined one: automatic numbering with prefix/suffix/width/start and {FY}, yearly restart, or typed by hand (unique); print title; in use; F10 lists them; numbers shown everywhere and in GSTR-1 (documents issued per series)",
+      "id": 3
+    },
+    {
+      "area": "Masters",
+      "name": "Currency",
+      "tier": 1,
+      "tally": "Create > Currency",
+      "status": "done",
+      "note": "symbol, formal name, decimal places, decimal word; rates of exchange by date (standard, selling, buying)",
+      "id": 4
+    },
+    {
+      "area": "Masters",
+      "name": "Cost Category",
+      "tier": 2,
+      "tally": "Create > Cost Centre",
+      "status": "done",
+      "note": "categories (Primary Cost Category predefined); Create/Alter A",
+      "id": 5
+    },
+    {
+      "area": "Masters",
+      "name": "Cost Centre",
+      "tier": 2,
+      "tally": "Create > Cost Centre",
+      "status": "done",
+      "note": "a tree of centres under a category; Create/Alter C; split on voucher lines via the Cost Allocations panel (accounting vouchers; not yet on item invoices)",
+      "id": 6
+    },
+    {
+      "area": "Masters",
+      "name": "Budget",
+      "tier": 1,
+      "tally": "Create > Budget / Scenario",
+      "status": "done",
+      "note": "groups, ledgers and cost centres; nett or closing; nested budgets; Budget Variance (also under a scenario)",
+      "id": 7
+    },
+    {
+      "area": "Masters",
+      "name": "Scenario",
+      "tier": 1,
+      "tally": "Create > Budget / Scenario",
+      "status": "done",
+      "note": "actuals or not plus reversing journals, optional and memorandum vouchers; TB, P&L, Balance Sheet under a scenario",
+      "id": 8
+    },
+    {
+      "area": "Masters",
+      "name": "GST Registration (Tax Unit)",
+      "tier": 2,
+      "tally": "Create > GST",
+      "status": "done",
+      "note": "main GSTIN plus further registrations; voucher types belong to one; GSTR-1/3B and the GSTR-1 file per registration",
+      "id": 9
+    },
+    {
+      "area": "Masters",
+      "name": "GST Classification",
+      "tier": 2,
+      "tally": "Create > GST",
+      "status": "done",
+      "note": "HSN/SAC, rate and taxability picked on items and ledgers; rate change reaches new invoices only; Edit Log",
+      "id": 10
+    },
+    {
+      "area": "Masters",
+      "name": "TDS Nature of Payment",
+      "tier": 1,
+      "tally": "Create > TDS",
+      "status": "done",
+      "note": "section, rates (individual, others, no PAN), single and annual limits, 194Q excess; standard 2025-26 natures seeded",
+      "id": 11
+    },
+    {
+      "area": "Masters",
+      "name": "Stock Item",
+      "tier": 3,
+      "tally": "Create > Inventory masters",
+      "status": "done",
+      "note": "group, unit, opening qty/rate/value by godown; Alt+C from an invoice; Tally XML STOCKITEM",
+      "id": 12
+    },
+    {
+      "area": "Masters",
+      "name": "Unit",
+      "tier": 3,
+      "tally": "Create > Inventory masters",
+      "status": "done",
+      "note": "simple units with decimal places; compound units (Box of 12 Nos), entered as 2-5 and shown as 2 Box 5 Nos; rates are per the second unit",
+      "id": 13
+    },
+    {
+      "area": "Masters",
+      "name": "Stock Group",
+      "tier": 3,
+      "tally": "Create > Inventory masters",
+      "status": "done",
+      "note": "nested groups; Tally XML STOCKGROUP",
+      "id": 14
+    },
+    {
+      "area": "Masters",
+      "name": "Godown / Location",
+      "tier": 3,
+      "tally": "Create > Inventory masters",
+      "status": "done",
+      "note": "nested godowns, Main Location default; Tally XML GODOWN",
+      "id": 15
+    },
+    {
+      "area": "Masters",
+      "name": "Stock Category",
+      "tier": 1,
+      "tally": "Create > Stock Category",
+      "status": "done",
+      "note": "Stock categories (tree), on stock items; backup and restore",
+      "id": 16
+    },
+    {
+      "area": "Masters",
+      "name": "Employee",
+      "tier": 1,
+      "tally": "Create > Payroll masters",
+      "status": "done",
+      "note": "cost centre with joining/leaving, designation, bank, PAN, UAN, PF, ESI IP, PRAN, tax regime",
+      "id": 17
+    },
+    {
+      "area": "Masters",
+      "name": "Employee Group",
+      "tier": 1,
+      "tally": "Create > Payroll masters",
+      "status": "done",
+      "note": "cost centre tree of employee groups; salary details by group",
+      "id": 18
+    },
+    {
+      "area": "Masters",
+      "name": "Employee Category",
+      "tier": 1,
+      "tally": "Create > Payroll masters",
+      "status": "done",
+      "note": "cost categories, as in Tally",
+      "id": 19
+    },
+    {
+      "area": "Masters",
+      "name": "Pay Head",
+      "tier": 1,
+      "tally": "Create > Payroll masters",
+      "status": "done",
+      "note": "ledger + calculation: user value, flat, attendance, production, computed with slabs/ceiling; statutory PF/EPS/EPF/EDLI/ESI/PT/IT/NPS; rounding",
+      "id": 20
+    },
+    {
+      "area": "Masters",
+      "name": "Attendance / Production Type",
+      "tier": 1,
+      "tally": "Create > Payroll masters",
+      "status": "done",
+      "note": "attendance, leave with pay, leave without pay, production with units",
+      "id": 21
+    },
+    {
+      "area": "Masters",
+      "name": "Closing stock (accounts-only)",
+      "tier": 2,
+      "tally": "Ledger closing balance for Stock-in-Hand",
+      "status": "done",
+      "note": "stock valuation by date",
+      "id": 22
+    },
+    {
+      "area": "Vouchers",
+      "name": "Contra",
+      "tier": 3,
+      "tally": "Vouchers > Contra",
+      "status": "done",
+      "note": "accounting mode",
+      "id": 23
+    },
+    {
+      "area": "Vouchers",
+      "name": "Payment",
+      "tier": 3,
+      "tally": "Vouchers > Payment",
+      "status": "done",
+      "note": "accounting mode",
+      "id": 24
+    },
+    {
+      "area": "Vouchers",
+      "name": "Receipt",
+      "tier": 3,
+      "tally": "Vouchers > Receipt",
+      "status": "done",
+      "note": "accounting mode",
+      "id": 25
+    },
+    {
+      "area": "Vouchers",
+      "name": "Journal",
+      "tier": 3,
+      "tally": "Vouchers > Journal",
+      "status": "done",
+      "note": "accounting mode",
+      "id": 26
+    },
+    {
+      "area": "Vouchers",
+      "name": "Sales",
+      "tier": 3,
+      "tally": "Vouchers > Sales",
+      "status": "done",
+      "note": "accounting mode",
+      "id": 27
+    },
+    {
+      "area": "Vouchers",
+      "name": "Purchase",
+      "tier": 3,
+      "tally": "Vouchers > Purchase",
+      "status": "done",
+      "note": "accounting mode",
+      "id": 28
+    },
+    {
+      "area": "Vouchers",
+      "name": "Credit Note",
+      "tier": 2,
+      "tally": "Vouchers > Credit Note",
+      "status": "done",
+      "note": "accounting mode",
+      "id": 29
+    },
+    {
+      "area": "Vouchers",
+      "name": "Debit Note",
+      "tier": 2,
+      "tally": "Vouchers > Debit Note",
+      "status": "done",
+      "note": "accounting mode",
+      "id": 30
+    },
+    {
+      "area": "Vouchers",
+      "name": "Sales/Purchase in item-invoice mode",
+      "tier": 3,
+      "tally": "Vouchers > Sales (Item Invoice)",
+      "status": "done",
+      "note": "party, sales/purchase ledger, item lines with godown/qty/rate, additional ledgers, party bill-wise; Ctrl+V toggles; Tally XML ALLINVENTORYENTRIES",
+      "id": 31
+    },
+    {
+      "area": "Vouchers",
+      "name": "Memorandum",
+      "tier": 1,
+      "tally": "Vouchers > other types",
+      "status": "done",
+      "note": "Ctrl+F10; kept with its lines but out of the books",
+      "id": 32
+    },
+    {
+      "area": "Vouchers",
+      "name": "Reversing Journal",
+      "tier": 1,
+      "tally": "Vouchers > other types",
+      "status": "done",
+      "note": "out of the books, applicable-upto date, effective in scenarios until then",
+      "id": 33
+    },
+    {
+      "area": "Vouchers",
+      "name": "Post-dated vouchers",
+      "tier": 1,
+      "tally": "Vouchers > other types",
+      "status": "done",
+      "note": "held out of the books until their date, then posted by the server on the day; listed with what they will move",
+      "id": 34
+    },
+    {
+      "area": "Vouchers",
+      "name": "Optional vouchers",
+      "tier": 1,
+      "tally": "Vouchers > other types",
+      "status": "done",
+      "note": "Ctrl+L or the Optional button; out of the books until made regular, which posts it",
+      "id": 35
+    },
+    {
+      "area": "Vouchers",
+      "name": "Sales Order",
+      "tier": 2,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "Alt+F5; party, items, rate, due date per line; pending until delivered or invoiced",
+      "id": 36
+    },
+    {
+      "area": "Vouchers",
+      "name": "Purchase Order",
+      "tier": 2,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "via F10 (Tally's Alt+F4 would close the window); same as Sales Order",
+      "id": 37
+    },
+    {
+      "area": "Vouchers",
+      "name": "Delivery Note",
+      "tier": 2,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "Alt+F8; made against a pending Sales Order (fills its lines); moves stock, invoiced later without moving it again",
+      "id": 38
+    },
+    {
+      "area": "Vouchers",
+      "name": "Receipt Note",
+      "tier": 2,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "Alt+F9; against a Purchase Order; values stock at its rate; the purchase invoiced against it does not count the goods twice",
+      "id": 39
+    },
+    {
+      "area": "Vouchers",
+      "name": "Stock Journal",
+      "tier": 2,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "Alt+F7; Source and Destination lists, godown transfers and manufacture; one product takes the materials' cost",
+      "id": 40
+    },
+    {
+      "area": "Vouchers",
+      "name": "Physical Stock",
+      "tier": 2,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "Ctrl+F7; counted quantity per item and godown; the difference (fixed when saved, worked out again on alteration) goes in or out at average cost",
+      "id": 41
+    },
+    {
+      "area": "Vouchers",
+      "name": "Manufacturing Journal",
+      "tier": 1,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "BOM fill (Alt+B), components at average cost, production takes cost + additional cost",
+      "id": 42
+    },
+    {
+      "area": "Vouchers",
+      "name": "Rejections In",
+      "tier": 1,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "goods rejected by a customer back into stock, with party",
+      "id": 43
+    },
+    {
+      "area": "Vouchers",
+      "name": "Rejections Out",
+      "tier": 1,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "goods returned to a supplier, with party",
+      "id": 44
+    },
+    {
+      "area": "Vouchers",
+      "name": "Material In",
+      "tier": 1,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "receives finished goods against a Job Work Out Order and consumes materials at the job worker; principal materials into third-party godown",
+      "id": 45
+    },
+    {
+      "area": "Vouchers",
+      "name": "Material Out",
+      "tier": 1,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "sends materials to the job worker's godown at cost; or back to a principal",
+      "id": 46
+    },
+    {
+      "area": "Vouchers",
+      "name": "Job Work In Order",
+      "tier": 1,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "principal's order: goods to send back, pending tracked",
+      "id": 47
+    },
+    {
+      "area": "Vouchers",
+      "name": "Job Work Out Order",
+      "tier": 1,
+      "tally": "Vouchers > inventory types",
+      "status": "done",
+      "note": "order to a job worker, pending tracked by Material In",
+      "id": 48
+    },
+    {
+      "area": "Vouchers",
+      "name": "Payroll",
+      "tier": 1,
+      "tally": "Vouchers > payroll",
+      "status": "done",
+      "note": "Payroll voucher with Ctrl+F Auto Fill, entries split by employee",
+      "id": 49
+    },
+    {
+      "area": "Vouchers",
+      "name": "Attendance",
+      "tier": 1,
+      "tally": "Vouchers > payroll",
+      "status": "done",
+      "note": "Attendance voucher, no ledger entries",
+      "id": 50
+    },
+    {
+      "area": "Vouchers",
+      "name": "Voucher alteration, cancel, delete",
+      "tier": 3,
+      "tally": "Day Book > Alter / Alt+X / Alt+D",
+      "status": "done",
+      "note": "",
+      "id": 51
+    },
+    {
+      "area": "Reports",
+      "name": "Balance Sheet",
+      "tier": 3,
+      "tally": "Gateway",
+      "status": "done",
+      "note": "",
+      "id": 52
+    },
+    {
+      "area": "Reports",
+      "name": "Profit & Loss A/c",
+      "tier": 3,
+      "tally": "Gateway",
+      "status": "done",
+      "note": "",
+      "id": 53
+    },
+    {
+      "area": "Reports",
+      "name": "Trial Balance",
+      "tier": 3,
+      "tally": "Gateway",
+      "status": "done",
+      "note": "",
+      "id": 54
+    },
+    {
+      "area": "Reports",
+      "name": "Day Book",
+      "tier": 3,
+      "tally": "Gateway",
+      "status": "done",
+      "note": "",
+      "id": 55
+    },
+    {
+      "area": "Reports",
+      "name": "Chart of Accounts",
+      "tier": 3,
+      "tally": "Gateway",
+      "status": "done",
+      "note": "",
+      "id": 56
+    },
+    {
+      "area": "Reports",
+      "name": "Drill-down from reports to vouchers",
+      "tier": 3,
+      "tally": "Enter on any report line",
+      "status": "done",
+      "note": "TB, Balance Sheet and P&L -> group summary -> ledger -> statement -> voucher; arrows down the left side, then the right",
+      "id": 57
+    },
+    {
+      "area": "Reports",
+      "name": "Stock Summary",
+      "tier": 3,
+      "tally": "Gateway > Stock Summary",
+      "status": "done",
+      "note": "average cost; group drill; Alt+F1 detailed with godown quantities; feeds P&L and Balance Sheet",
+      "id": 58
+    },
+    {
+      "area": "Reports",
+      "name": "Ratio Analysis",
+      "tier": 2,
+      "tally": "Gateway / Final Accounts",
+      "status": "done",
+      "note": "Principal groups and ratios as Tally lists them (current, quick, debt/equity, GP/NP %, operating cost, receivable days, ROI, return on working capital)",
+      "id": 59
+    },
+    {
+      "area": "Reports",
+      "name": "Cash Flow",
+      "tier": 2,
+      "tally": "Gateway / Final Accounts",
+      "status": "done",
+      "note": "Month-wise inflow/outflow of cash and bank; a month opens the groups the money came from or went to; Contra is not a flow",
+      "id": 60
+    },
+    {
+      "area": "Reports",
+      "name": "Funds Flow",
+      "tier": 2,
+      "tally": "Gateway / Final Accounts",
+      "status": "done",
+      "note": "Sources and applications of funds with working capital changes by group; sources less applications = the change in working capital",
+      "id": 61
+    },
+    {
+      "area": "Reports",
+      "name": "Income & Expense A/c",
+      "tier": 2,
+      "tally": "Gateway / Final Accounts",
+      "status": "done",
+      "note": "F11 switch: one Income & Expenditure account with the excess of income over expenditure",
+      "id": 62
+    },
+    {
+      "area": "Reports",
+      "name": "Dashboard",
+      "tier": 2,
+      "tally": "Gateway / Final Accounts",
+      "status": "done",
+      "note": "figures tiles, sales/purchases by month, largest receivables and payables, drill-down",
+      "id": 63
+    },
+    {
+      "area": "Reports",
+      "name": "Statistics",
+      "tier": 2,
+      "tally": "Gateway / Final Accounts",
+      "status": "done",
+      "note": "vouchers by type (own types, cancelled, optional) and masters by kind; Enter opens the register",
+      "id": 64
+    },
+    {
+      "area": "Account Books",
+      "name": "Ledger (vouchers with running balance)",
+      "tier": 3,
+      "tally": "Account Books > Ledger",
+      "status": "done",
+      "note": "month-wise summary, drills to vouchers",
+      "id": 65
+    },
+    {
+      "area": "Account Books",
+      "name": "Cash/Bank Books",
+      "tier": 3,
+      "tally": "Account Books",
+      "status": "done",
+      "note": "Account Books > Cash/Bank Books (group summary of cash and bank)",
+      "id": 66
+    },
+    {
+      "area": "Account Books",
+      "name": "Group Summary",
+      "tier": 3,
+      "tally": "Account Books",
+      "status": "done",
+      "note": "opening, debit, credit, closing; drill to sub-groups and ledgers",
+      "id": 67
+    },
+    {
+      "area": "Account Books",
+      "name": "Group Vouchers",
+      "tier": 3,
+      "tally": "Account Books",
+      "status": "done",
+      "note": "every entry under the group with running balance",
+      "id": 68
+    },
+    {
+      "area": "Account Books",
+      "name": "Sales Register",
+      "tier": 2,
+      "tally": "Account Books > registers",
+      "status": "done",
+      "note": "month-wise, drills to the vouchers",
+      "id": 69
+    },
+    {
+      "area": "Account Books",
+      "name": "Purchase Register",
+      "tier": 2,
+      "tally": "Account Books > registers",
+      "status": "done",
+      "note": "month-wise, drills to the vouchers",
+      "id": 70
+    },
+    {
+      "area": "Account Books",
+      "name": "Payment Register",
+      "tier": 2,
+      "tally": "Account Books > registers",
+      "status": "done",
+      "note": "month-wise, drills to the vouchers",
+      "id": 71
+    },
+    {
+      "area": "Account Books",
+      "name": "Receipts Register",
+      "tier": 2,
+      "tally": "Account Books > registers",
+      "status": "done",
+      "note": "month-wise, drills to the vouchers",
+      "id": 72
+    },
+    {
+      "area": "Account Books",
+      "name": "Journal Register",
+      "tier": 2,
+      "tally": "Account Books > registers",
+      "status": "done",
+      "note": "month-wise, drills to the vouchers",
+      "id": 73
+    },
+    {
+      "area": "Account Books",
+      "name": "Contra Register",
+      "tier": 2,
+      "tally": "Account Books > registers",
+      "status": "done",
+      "note": "month-wise, drills to the vouchers",
+      "id": 74
+    },
+    {
+      "area": "Account Books",
+      "name": "Debit Note Register",
+      "tier": 2,
+      "tally": "Account Books > registers",
+      "status": "done",
+      "note": "month-wise, drills to the vouchers",
+      "id": 75
+    },
+    {
+      "area": "Account Books",
+      "name": "Credit Note Register",
+      "tier": 2,
+      "tally": "Account Books > registers",
+      "status": "done",
+      "note": "month-wise, drills to the vouchers",
+      "id": 76
+    },
+    {
+      "area": "Account Books",
+      "name": "POS Register",
+      "tier": 1,
+      "tally": "Account Books > POS Register",
+      "status": "done",
+      "note": "POS voucher types; register with cash, card/bank, credit; day totals",
+      "id": 77
+    },
+    {
+      "area": "Outstandings",
+      "name": "Bill-wise receivables",
+      "tier": 3,
+      "tally": "Statements of Accounts > Outstandings",
+      "status": "done",
+      "note": "pending bills with due date, overdue days, ageing",
+      "id": 78
+    },
+    {
+      "area": "Outstandings",
+      "name": "Bill-wise payables",
+      "tier": 3,
+      "tally": "Statements of Accounts > Outstandings",
+      "status": "done",
+      "note": "pending bills with due date, overdue days, ageing",
+      "id": 79
+    },
+    {
+      "area": "Outstandings",
+      "name": "Ledger outstandings",
+      "tier": 3,
+      "tally": "Statements of Accounts > Outstandings",
+      "status": "done",
+      "note": "bills, on account, closing",
+      "id": 80
+    },
+    {
+      "area": "Outstandings",
+      "name": "Group outstandings",
+      "tier": 3,
+      "tally": "Statements of Accounts > Outstandings",
+      "status": "done",
+      "note": "per party: billed, overdue, on account",
+      "id": 81
+    },
+    {
+      "area": "Outstandings",
+      "name": "Overdue receivables",
+      "tier": 3,
+      "tally": "Statements of Accounts > Outstandings",
+      "status": "done",
+      "note": "Exception Reports > Overdue Receivables",
+      "id": 82
+    },
+    {
+      "area": "Outstandings",
+      "name": "Overdue payables",
+      "tier": 3,
+      "tally": "Statements of Accounts > Outstandings",
+      "status": "done",
+      "note": "Exception Reports > Overdue Payables",
+      "id": 83
+    },
+    {
+      "area": "Interest",
+      "name": "Interest Receivable",
+      "tier": 1,
+      "tally": "Statements of Accounts > Interest",
+      "status": "done",
+      "note": "every interest-bearing ledger with a Dr result; simple interest by the day on a 365-day year",
+      "id": 84
+    },
+    {
+      "area": "Interest",
+      "name": "Interest Payable",
+      "tier": 1,
+      "tally": "Statements of Accounts > Interest",
+      "status": "done",
+      "note": "as receivable, for Cr results",
+      "id": 85
+    },
+    {
+      "area": "Interest",
+      "name": "Ledger interest",
+      "tier": 1,
+      "tally": "Statements of Accounts > Interest",
+      "status": "done",
+      "note": "rate % a year on the balance or on overdue bills (from the due date, as bills settle); stretch-by-stretch calculation; not booked as vouchers, one rate for the whole period",
+      "id": 86
+    },
+    {
+      "area": "Interest",
+      "name": "Group interest",
+      "tier": 1,
+      "tally": "Statements of Accounts > Interest",
+      "status": "done",
+      "note": "a group's interest-bearing ledgers",
+      "id": 87
+    },
+    {
+      "area": "Cost Centres",
+      "name": "Cost Centre Summary",
+      "tier": 1,
+      "tally": "Statements of Accounts > Cost Centres",
+      "status": "done",
+      "note": "Category Summary: each category with its centres, sub-centres rolled into their parent",
+      "id": 88
+    },
+    {
+      "area": "Cost Centres",
+      "name": "Cost Category Summary",
+      "tier": 1,
+      "tally": "Statements of Accounts > Cost Centres",
+      "status": "done",
+      "note": "category totals in the Category Summary",
+      "id": 89
+    },
+    {
+      "area": "Cost Centres",
+      "name": "Cost Centre Break-up",
+      "tier": 1,
+      "tally": "Statements of Accounts > Cost Centres",
+      "status": "done",
+      "note": "the ledgers booked to a centre and its sub-centres",
+      "id": 90
+    },
+    {
+      "area": "Cost Centres",
+      "name": "Ledger Break-up",
+      "tier": 1,
+      "tally": "Statements of Accounts > Cost Centres",
+      "status": "done",
+      "note": "one ledger's amounts by cost centre",
+      "id": 91
+    },
+    {
+      "area": "Cost Centres",
+      "name": "Group Break-up",
+      "tier": 1,
+      "tally": "Statements of Accounts > Cost Centres",
+      "status": "done",
+      "note": "a group's ledgers by cost centre",
+      "id": 92
+    },
+    {
+      "area": "Banking",
+      "name": "Bank Reconciliation",
+      "tier": 3,
+      "tally": "Banking",
+      "status": "done",
+      "note": "bank dates, reconciliation statement; kept through alterations",
+      "id": 93
+    },
+    {
+      "area": "Banking",
+      "name": "Bank Statement import",
+      "tier": 3,
+      "tally": "Banking",
+      "status": "done",
+      "note": "CSV import with automatic matching",
+      "id": 94
+    },
+    {
+      "area": "Banking",
+      "name": "Cheque Printing",
+      "tier": 2,
+      "tally": "Banking",
+      "status": "done",
+      "note": "CTS-2010 leaf by default; per-bank layout (positions, leaf size, crossing) edited on the print and saved",
+      "id": 95
+    },
+    {
+      "area": "Banking",
+      "name": "Cheque Register",
+      "tier": 2,
+      "tally": "Banking",
+      "status": "done",
+      "note": "every cheque issued and received, by bank, with cleared / not cleared / post-dated status",
+      "id": 96
+    },
+    {
+      "area": "Banking",
+      "name": "Post-dated cheque summary",
+      "tier": 2,
+      "tally": "Banking",
+      "status": "done",
+      "note": "post-dated vouchers still ahead of today",
+      "id": 97
+    },
+    {
+      "area": "Banking",
+      "name": "Deposit Slip",
+      "tier": 2,
+      "tally": "Banking",
+      "status": "done",
+      "note": "received cheques not yet cleared, per bank, printable",
+      "id": 98
+    },
+    {
+      "area": "Banking",
+      "name": "Payment Advice",
+      "tier": 2,
+      "tally": "Banking",
+      "status": "done",
+      "note": "letter to the payee with the cheque and the bills it settles",
+      "id": 99
+    },
+    {
+      "area": "Banking",
+      "name": "Payment gateway reconciliation",
+      "tier": 1,
+      "tally": "Banking",
+      "status": "done",
+      "note": "settlement report upload, payments matched to receipts, receipts not in the report, settlements posted as one Receipt with fee and GST",
+      "id": 100
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Stock Item vouchers",
+      "tier": 2,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "running quantity, drill to the invoice",
+      "id": 101
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Godown Summary",
+      "tier": 2,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "each godown's items and value at average cost",
+      "id": 102
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Stock Group Summary",
+      "tier": 2,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "Stock Summary for one stock group",
+      "id": 103
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Stock Query",
+      "tier": 2,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "One item: group, category, HSN/rate, closing stock and value, average cost, stock by godown, last 5 purchases and sales, on order, reorder level",
+      "id": 104
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Ageing Analysis",
+      "tier": 2,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "FIFO ageing of the stock in hand by receipt date, brackets 0-45/45-90/90-180/180+ or ?brackets=; godown transfers do not reset age",
+      "id": 105
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Reorder Status",
+      "tier": 2,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "Reorder level and minimum order on the stock item (migration 021, XML REORDERBASE/MINIMUMORDERBASE); purchase orders pending and sales orders due counted",
+      "id": 106
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Stock Category Summary",
+      "tier": 1,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "Items by category across stock groups, drill into sub-categories; uncategorised items listed by themselves",
+      "id": 107
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Batch/Godown vouchers",
+      "tier": 1,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "batch per line with mfg/expiry, stock checked per batch and godown, opening batch, batch-wise expiry report",
+      "id": 108
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Movement Analysis",
+      "tier": 1,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "Inward and outward quantity, value and average rate per item, and per party for one item; orders and godown transfers excluded",
+      "id": 109
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Cost Estimation",
+      "tier": 1,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "BOM explosion at average cost, multi-level",
+      "id": 110
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Item Cost Track",
+      "tier": 1,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "cost track on vouchers and invoices; sales, costs, margin, goods in/out per track",
+      "id": 111
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Sales Order analysis",
+      "tier": 1,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "monthly ordered value and quantity by item or party, delivered and pending (plus outstandings)",
+      "id": 112
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Purchase Order analysis",
+      "tier": 1,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "as for sales orders",
+      "id": 113
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Sales bills pending",
+      "tier": 1,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "delivery notes not yet invoiced",
+      "id": 114
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Purchase bills pending",
+      "tier": 1,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "receipt notes not yet invoiced",
+      "id": 115
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Order/note registers",
+      "tier": 1,
+      "tally": "Inventory Books / Statements",
+      "status": "done",
+      "note": "Sales/Purchase Order Books, Delivery/Receipt Note, Stock Journal and Physical Stock Registers",
+      "id": 116
+    },
+    {
+      "area": "Inventory Reports",
+      "name": "Job work reports",
+      "tier": 1,
+      "tally": "Display More Reports > Job Work",
+      "status": "done",
+      "note": "orders out/in pending, our stock with job workers (valued), principals stock with us",
+      "id": 117
+    },
+    {
+      "area": "GST",
+      "name": "GSTR-1",
+      "tier": 3,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "B2B, B2C Large/Small, exports (with/without payment), credit notes registered and unregistered, nil, HSN B2B/B2C, documents, amendments (B2BA, B2CLA, CDNRA) once a month is marked filed, needs-attention list, portal JSON (Alt+J); JSON not yet checked against the offline tool",
+      "id": 118
+    },
+    {
+      "area": "GST",
+      "name": "GSTR-3B",
+      "tier": 3,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "3.1(a)(b)(c)(d), 3.2, 4(A)(3)(5), 4(B)(2), 4(C), 4(D)(1), payment with Rule 88A set-off; reverse charge tax in cash; no interest or late fee",
+      "id": 119
+    },
+    {
+      "area": "GST",
+      "name": "GST on vouchers (CGST/SGST/IGST)",
+      "tier": 3,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "CGST+SGST or IGST from the place of supply, filled into invoices; breakup stored with each voucher; wrong tax flagged",
+      "id": 120
+    },
+    {
+      "area": "GST",
+      "name": "e-Invoice (IRN)",
+      "tier": 3,
+      "tally": "Statutory > GST",
+      "status": "partial",
+      "note": "IRP schema 1.1 JSON per voucher and in bulk (Alt+J), with every portal check before upload; IRN, ack and signed QR stored and printed with the QR code. Direct generation through a GSP/NIC API needs credentials",
+      "id": 121
+    },
+    {
+      "area": "GST",
+      "name": "e-Way Bill",
+      "tier": 3,
+      "tally": "Statutory > GST",
+      "status": "partial",
+      "note": "Bulk-upload JSON (Alt+W) with transport Part B, direction for sales/purchase/returns; e-Way Bill number and validity stored and printed. Direct generation needs credentials",
+      "id": 122
+    },
+    {
+      "area": "GST",
+      "name": "GSTR-9 annual",
+      "tier": 2,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "tables 4, 5, 6-8 (8A from 2B as accepted in IMS), 9, 17, 18 from GSTR-1 and twelve GSTR-3Bs",
+      "id": 123
+    },
+    {
+      "area": "GST",
+      "name": "GSTR-2A/2B reconciliation",
+      "tier": 2,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "GSTR-2B JSON upload; matched / mismatch (date, value, tax) / not in books / not in 2B, on supplier invoice no.",
+      "id": 124
+    },
+    {
+      "area": "GST",
+      "name": "GSTR-1 reconciliation",
+      "tier": 2,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "filed GSTR-1 JSON against the books (B2B, CDNR)",
+      "id": 125
+    },
+    {
+      "area": "GST",
+      "name": "Challan reconciliation",
+      "tier": 2,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "GST payments by tax with CPIN/CIN/date, against GSTR-3B cash",
+      "id": 126
+    },
+    {
+      "area": "GST",
+      "name": "Reverse charge",
+      "tier": 2,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "reverse-charge purchase/expense ledgers (invoice, journal or payment): 3.1(d) and 4(A)(3), paid in cash",
+      "id": 127
+    },
+    {
+      "area": "GST",
+      "name": "Advances received/paid",
+      "tier": 2,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "advances for services (rate on receipt, Advance bill), 11A unadjusted, 11B adjusted; net in GSTR-3B 3.1(a)",
+      "id": 128
+    },
+    {
+      "area": "GST",
+      "name": "GST rate setup",
+      "tier": 2,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "rate and HSN/SAC on stock items and on service/other ledgers",
+      "id": 129
+    },
+    {
+      "area": "GST",
+      "name": "Party GSTIN update",
+      "tier": 2,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "all parties GSTIN at once, state and PAN follow",
+      "id": 130
+    },
+    {
+      "area": "GST",
+      "name": "CMP-08",
+      "tier": 1,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "composition registration and rate; quarterly turnover and tax, RCM",
+      "id": 131
+    },
+    {
+      "area": "GST",
+      "name": "GSTR-4",
+      "tier": 1,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "inward 4A-4C, CMP-08 of the year, outward at the composition rate",
+      "id": 132
+    },
+    {
+      "area": "GST",
+      "name": "IMS inward",
+      "tier": 1,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "accept / reject / pending per 2B document, kept across uploads; credit of documents not rejected",
+      "id": 133
+    },
+    {
+      "area": "GST",
+      "name": "Kerala flood cess",
+      "tier": 1,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "report of the 1% (0.25%) cess on Kerala intra-state B2C supplies, Aug 2019 to Jul 2021",
+      "id": 134
+    },
+    {
+      "area": "GST",
+      "name": "UQC setup",
+      "tier": 1,
+      "tally": "Statutory > GST",
+      "status": "done",
+      "note": "units.uqc (validated against the GST list), from Tally XML GSTREPUOM; common symbols map by themselves",
+      "id": 135
+    },
+    {
+      "area": "TDS / TCS",
+      "name": "TDS on vouchers",
+      "tier": 2,
+      "tally": "Statutory > TDS",
+      "status": "done",
+      "note": "natures of payment (standard 194C/J/I/H/A/Q, editable), deductee types, PAN/206AA, single and annual limits with catch-up, 194Q excess; hint and Alt+T on vouchers",
+      "id": 136
+    },
+    {
+      "area": "TDS / TCS",
+      "name": "Form 26Q",
+      "tier": 2,
+      "tally": "Statutory > TDS",
+      "status": "partial",
+      "note": "deductee details and challans per quarter (Form 140 from 2026-27), matched to payments, CSV for the RPU; the FVU file is made and validated by the government RPU/FVU (not generated here)",
+      "id": 137
+    },
+    {
+      "area": "TDS / TCS",
+      "name": "TDS outstandings",
+      "tier": 2,
+      "tally": "Statutory > TDS",
+      "status": "done",
+      "note": "by nature: due, deducted, paid, payable; payments with challan details",
+      "id": 138
+    },
+    {
+      "area": "TDS / TCS",
+      "name": "Form 27Q",
+      "tier": 1,
+      "tally": "Statutory > TDS / TCS",
+      "status": "done",
+      "note": "non-resident parties (country not India), 195 nature, deductee sheet with country, CSV",
+      "id": 139
+    },
+    {
+      "area": "TDS / TCS",
+      "name": "Form 140/144",
+      "tier": 1,
+      "tally": "Statutory > TDS / TCS",
+      "status": "done",
+      "note": "Forms 140/144/143 (Income-tax Act 2025) named from tax year 2026-27, old names before; same statement and CSV",
+      "id": 140
+    },
+    {
+      "area": "TDS / TCS",
+      "name": "TDS challan reconciliation",
+      "tier": 1,
+      "tally": "Statutory > TDS / TCS",
+      "status": "done",
+      "note": "payments of TDS and TCS with challans entered together, allocated vs unallocated, uncovered deductions",
+      "id": 141
+    },
+    {
+      "area": "TDS / TCS",
+      "name": "TCS on vouchers",
+      "tier": 1,
+      "tally": "Statutory > TDS / TCS",
+      "status": "done",
+      "note": "TCS natures of goods (206C, 206C(1F)), due on consideration incl. GST, 206CC, Alt+T on vouchers and invoices",
+      "id": 142
+    },
+    {
+      "area": "TDS / TCS",
+      "name": "Form 27EQ",
+      "tier": 1,
+      "tally": "Statutory > TDS / TCS",
+      "status": "done",
+      "note": "collectee details with collection codes matched to challans, CSV",
+      "id": 143
+    },
+    {
+      "area": "TDS / TCS",
+      "name": "TCS outstandings",
+      "tier": 1,
+      "tally": "Statutory > TDS / TCS",
+      "status": "done",
+      "note": "by nature: due, collected, paid, payable; payments with challans",
+      "id": 144
+    },
+    {
+      "area": "Payroll",
+      "name": "Payslip",
+      "tier": 1,
+      "tally": "Payroll Reports",
+      "status": "done",
+      "note": "payslip with attendance, earnings, deductions, employer contributions",
+      "id": 145
+    },
+    {
+      "area": "Payroll",
+      "name": "Pay Sheet",
+      "tier": 1,
+      "tally": "Payroll Reports",
+      "status": "done",
+      "note": "pay sheet, employees x pay heads, CSV",
+      "id": 146
+    },
+    {
+      "area": "Payroll",
+      "name": "Attendance Sheet",
+      "tier": 1,
+      "tally": "Payroll Reports",
+      "status": "done",
+      "note": "attendance sheet, employees x types",
+      "id": 147
+    },
+    {
+      "area": "Payroll",
+      "name": "Payroll Register",
+      "tier": 1,
+      "tally": "Payroll Reports",
+      "status": "done",
+      "note": "payroll register by voucher",
+      "id": 148
+    },
+    {
+      "area": "Payroll",
+      "name": "PF reports",
+      "tier": 1,
+      "tally": "Payroll Reports",
+      "status": "done",
+      "note": "PF wages and contributions, EPFO ECR text file",
+      "id": 149
+    },
+    {
+      "area": "Payroll",
+      "name": "ESI reports",
+      "tier": 1,
+      "tally": "Payroll Reports",
+      "status": "done",
+      "note": "ESI wages, days, contributions, monthly contribution CSV",
+      "id": 150
+    },
+    {
+      "area": "Payroll",
+      "name": "Professional Tax",
+      "tier": 1,
+      "tally": "Payroll Reports",
+      "status": "done",
+      "note": "PT slabs, month-wise report",
+      "id": 151
+    },
+    {
+      "area": "Payroll",
+      "name": "Income tax on salary (Form 16, 24Q)",
+      "tier": 1,
+      "tally": "Payroll Reports",
+      "status": "done",
+      "note": "projected tax per regime (FY 2025-26 slabs, 87A, cess), Form 16 Part B, Form 24Q Annexure I CSV",
+      "id": 152
+    },
+    {
+      "area": "Payroll",
+      "name": "Gratuity",
+      "tier": 1,
+      "tally": "Payroll Reports",
+      "status": "done",
+      "note": "gratuity 15/26 per year of service, 5-year rule, Rs 20 lakh cap",
+      "id": 153
+    },
+    {
+      "area": "Payroll",
+      "name": "NPS",
+      "tier": 1,
+      "tally": "Payroll Reports",
+      "status": "done",
+      "note": "NPS employee/employer contributions by PRAN",
+      "id": 154
+    },
+    {
+      "area": "MSME",
+      "name": "MSME Form 1 Annexure",
+      "tier": 1,
+      "tally": "Statutory > MSME",
+      "status": "done",
+      "note": "micro/small suppliers unpaid beyond 45 days (or agreed/15) at the half-year end, 43B(h) at year end",
+      "id": 155
+    },
+    {
+      "area": "MSME",
+      "name": "Party MSME update",
+      "tier": 1,
+      "tally": "Statutory > MSME",
+      "status": "done",
+      "note": "type, Udyam number and activity of every party edited together",
+      "id": 156
+    },
+    {
+      "area": "Exceptions & Audit",
+      "name": "Cancelled vouchers",
+      "tier": 2,
+      "tally": "Exception Reports",
+      "status": "done",
+      "note": "with who cancelled them, from the Edit Log",
+      "id": 157
+    },
+    {
+      "area": "Exceptions & Audit",
+      "name": "Negative ledgers",
+      "tier": 2,
+      "tally": "Exception Reports",
+      "status": "done",
+      "note": "balance-sheet ledgers on the wrong side at the period end",
+      "id": 158
+    },
+    {
+      "area": "Exceptions & Audit",
+      "name": "Memorandum register",
+      "tier": 1,
+      "tally": "Exception Reports",
+      "status": "done",
+      "note": "Exception Reports: Memorandum Register",
+      "id": 159
+    },
+    {
+      "area": "Exceptions & Audit",
+      "name": "Reversing journal register",
+      "tier": 1,
+      "tally": "Exception Reports",
+      "status": "done",
+      "note": "reversing journals of the period, applicable-upto date, effective or reversed",
+      "id": 160
+    },
+    {
+      "area": "Exceptions & Audit",
+      "name": "Optional vouchers",
+      "tier": 1,
+      "tally": "Exception Reports",
+      "status": "done",
+      "note": "Exception Reports: Optional Vouchers",
+      "id": 161
+    },
+    {
+      "area": "Exceptions & Audit",
+      "name": "Post-dated vouchers",
+      "tier": 1,
+      "tally": "Exception Reports",
+      "status": "done",
+      "note": "Exception Reports: post-dated vouchers ahead of today",
+      "id": 162
+    },
+    {
+      "area": "Exceptions & Audit",
+      "name": "Negative stock",
+      "tier": 1,
+      "tally": "Exception Reports",
+      "status": "done",
+      "note": "Exception Reports: items below zero",
+      "id": 163
+    },
+    {
+      "area": "Exceptions & Audit",
+      "name": "Tracked vouchers",
+      "tier": 1,
+      "tally": "Exception Reports",
+      "status": "done",
+      "note": "exception report of delivery and receipt notes not invoiced, with age",
+      "id": 164
+    },
+    {
+      "area": "Exceptions & Audit",
+      "name": "Edit Log (audit trail)",
+      "tier": 3,
+      "tally": "Display More Reports > Edit Log",
+      "status": "done",
+      "note": "database-level, append-only; versions with changes highlighted",
+      "id": 165
+    },
+    {
+      "area": "Exceptions & Audit",
+      "name": "Tally Audit / verification",
+      "tier": 1,
+      "tally": "Statements of Accounts > Tally Audit",
+      "status": "done",
+      "note": "audit status per voucher (audited / under observation / altered after audit), entered and altered by, auditor and note",
+      "id": 166
+    },
+    {
+      "area": "Platform",
+      "name": "Keyboard-first navigation (Tally keys)",
+      "tier": 3,
+      "tally": "Gateway letters, F-keys, Alt+C, Alt+D, Ctrl+A, Esc",
+      "status": "done",
+      "note": "",
+      "id": 167
+    },
+    {
+      "area": "Platform",
+      "name": "Short date entry",
+      "tier": 3,
+      "tally": "14 / 14-10 / 14-Oct",
+      "status": "done",
+      "note": "",
+      "id": 168
+    },
+    {
+      "area": "Platform",
+      "name": "Desktop app, offline",
+      "tier": 3,
+      "tally": "tally.exe",
+      "status": "done",
+      "note": "Tauri + PGlite, ~27 MB installer",
+      "id": 169
+    },
+    {
+      "area": "Platform",
+      "name": "Periods and year-end carry forward",
+      "tier": 3,
+      "tally": "Alt+F2, books beginning",
+      "status": "done",
+      "note": "P&L carried into Profit & Loss A/c",
+      "id": 170
+    },
+    {
+      "area": "Platform",
+      "name": "Double-entry enforced by the engine",
+      "tier": 3,
+      "tally": "platform rule",
+      "status": "done",
+      "note": "commit-time check in the database",
+      "id": 171
+    },
+    {
+      "area": "Platform",
+      "name": "XML integration (import/export)",
+      "tier": 2,
+      "tally": "port 9000 XML",
+      "status": "done",
+      "note": "masters and vouchers in; TB, accounts, Day Book, Balance Sheet, P&L, Stock Summary, Ledger Vouchers, Bills Receivable/Payable out",
+      "id": 172
+    },
+    {
+      "area": "Platform",
+      "name": "Print / PDF",
+      "tier": 3,
+      "tally": "Alt+P / Alt+E / Alt+M",
+      "status": "done",
+      "note": "Alt+P prints any screen (Save as PDF in the dialog); printable vouchers with amount in words",
+      "id": 173
+    },
+    {
+      "area": "Platform",
+      "name": "Export to Excel/PDF",
+      "tier": 3,
+      "tally": "Alt+P / Alt+E / Alt+M",
+      "status": "done",
+      "note": "Alt+E writes a native .xlsx (numbers as numbers, #,##0.00, bold headings and totals); Alt+P prints or saves PDF",
+      "id": 174
+    },
+    {
+      "area": "Platform",
+      "name": "Email documents",
+      "tier": 3,
+      "tally": "Alt+P / Alt+E / Alt+M",
+      "status": "done",
+      "note": "Alt+M on any screen: the screen as HTML (styles inlined) through the company SMTP server; settings with write-only password, test send, E-mail Log",
+      "id": 175
+    },
+    {
+      "area": "Platform",
+      "name": "Users, passwords and roles",
+      "tier": 3,
+      "tally": "Company security / Backup",
+      "status": "done",
+      "note": "Owner, Accountant, Data Entry, Viewer enforced by the server; scrypt passwords; sessions; Edit Log names the user; no custom security levels yet",
+      "id": 176
+    },
+    {
+      "area": "Platform",
+      "name": "Backup and restore",
+      "tier": 3,
+      "tally": "Company security / Backup",
+      "status": "done",
+      "note": "one-file company backup; restore re-checks every rule; Edit Log travels with it",
+      "id": 177
+    },
+    {
+      "area": "Platform",
+      "name": "Multi-user over network (server mode)",
+      "tier": 2,
+      "tally": "TallyPrime Server / Client-Server",
+      "status": "done",
+      "note": "HOST=0.0.0.0 with sign-in and roles, HTTPS with TLS_CERT/TLS_KEY",
+      "id": 178
+    },
+    {
+      "area": "Platform",
+      "name": "ODBC access",
+      "tier": 2,
+      "tally": "Platform",
+      "status": "done",
+      "note": "read-only odbc schema views over the PostgreSQL ODBC driver (server edition)",
+      "id": 179
+    },
+    {
+      "area": "Platform",
+      "name": "Data import from Excel",
+      "tier": 2,
+      "tally": "Platform",
+      "status": "done",
+      "note": "ledgers, stock items, vouchers from .xlsx/.csv with loose column names; template; failed rows reported",
+      "id": 180
+    },
+    {
+      "area": "Platform",
+      "name": "Split company data",
+      "tier": 2,
+      "tally": "Platform",
+      "status": "done",
+      "note": "two new companies at a date; closing balances, pending bills and stock carried as opening",
+      "id": 181
+    },
+    {
+      "area": "Platform",
+      "name": "Multi-currency",
+      "tier": 2,
+      "tally": "Platform",
+      "status": "done",
+      "note": "ledgers in a currency, forex amount @ rate on vouchers and item invoices, bills keep forex, statement in the currency, Forex Gain/Loss (realised/unrealised by bill) with an adjusting Journal; not in XML vouchers",
+      "id": 182
+    },
+    {
+      "area": "Platform",
+      "name": "Multiple companies consolidated (group company)",
+      "tier": 2,
+      "tally": "Platform",
+      "status": "done",
+      "note": "consolidated BS, P&L and TB of member companies by group and ledger name",
+      "id": 183
+    },
+    {
+      "area": "Platform",
+      "name": "Remote access / Tally.NET sync",
+      "tier": 2,
+      "tally": "Platform",
+      "status": "partial",
+      "note": "the server edition is reachable from anywhere when hosted with HTTPS and sign-in; no Tally.NET-style relay or account login",
+      "id": 184
+    },
+    {
+      "area": "Platform",
+      "name": "Language / transliteration",
+      "tier": 2,
+      "tally": "Platform",
+      "status": "partial",
+      "note": "Hindi or English per computer for menus, titles, buttons, field labels and column headings; Roman-to-Devanagari transliteration of names; other Indian languages not yet",
+      "id": 185
+    },
+    {
+      "area": "Platform",
+      "name": "Bill-wise settlement in vouchers",
+      "tier": 2,
+      "tally": "Platform",
+      "status": "done",
+      "note": "New Ref / Agst Ref / Advance / On Account; opening bills; Tally XML BILLALLOCATIONS",
+      "id": 186
+    },
+    {
+      "area": "Platform",
+      "name": "Company features on/off (F11)",
+      "tier": 2,
+      "tally": "F11 / F12",
+      "status": "done",
+      "note": "F11 / Alt+K Features: inventory, godowns, orders, stock categories, bill-wise, cost centres, interest, GST, cheques, optional vouchers, e-documents, e-mail; switching off hides menus and voucher types, never deletes data",
+      "id": 187
+    },
+    {
+      "area": "Platform",
+      "name": "Configurations (F12)",
+      "tier": 2,
+      "tally": "F11 / F12",
+      "status": "done",
+      "note": "new voucher date, current balances, negative cash/bank warning, Day Book narrations",
+      "id": 188
+    }
+  ]
+}

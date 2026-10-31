@@ -1,0 +1,32 @@
+{
+ "target": "tallyprime",
+ "date": "2026-10-28T09:09:04.462Z",
+ "dataset": "255 ledgers, 5000 vouchers",
+ "metrics": [
+  {
+   "name": "import ledgers",
+   "value": 1846.8,
+   "unit": "ms"
+  },
+  {
+   "name": "import vouchers (throughput)",
+   "value": 59.7,
+   "unit": "vch/s"
+  },
+  {
+   "name": "trial balance (full year)",
+   "value": 16,
+   "unit": "ms"
+  },
+  {
+   "name": "day book (full year)",
+   "value": 1458.9,
+   "unit": "ms"
+  },
+  {
+   "name": "list of accounts",
+   "value": 518.1,
+   "unit": "ms"
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "target": "spectral-desktop",
+ "date": "2026-10-28T09:12:37.012Z",
+ "dataset": "255 ledgers, 5000 vouchers",
+ "metrics": [
+  {
+   "name": "import ledgers",
+   "value": 478.5,
+   "unit": "ms"
+  },
+  {
+   "name": "import vouchers (throughput)",
+   "value": 1588.7,
+   "unit": "vch/s"
+  },
+  {
+   "name": "trial balance (full year)",
+   "value": 21.8,
+   "unit": "ms"
+  },
+  {
+   "name": "day book (full year)",
+   "value": 251.2,
+   "unit": "ms"
+  },
+  {
+   "name": "list of accounts",
+   "value": 16.4,
+   "unit": "ms"
+  }
+ ]
+}
