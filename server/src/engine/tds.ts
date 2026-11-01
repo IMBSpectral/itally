@@ -161,28 +161,66 @@ export function quarterOf(date: string) {
   return m >= 4 && m <= 6 ? 1 : m <= 9 && m >= 7 ? 2 : m >= 10 ? 3 : 4
 }
 
+/**
+ * A nature's place under the Income-tax Act, 2025 (tax year 2026-27 on): the section and table
+ * serial that replace the 1961 Act's section, and the payment code Forms 140, 144 and 143 carry.
+ * Taken from the Notes to those forms as published; check them against the RPU's own code list.
+ * Contracts split by the deductee (individual or HUF, or others); section 194J by its kind of fee.
+ */
+export function act2025(n: { section: string; name?: string; collectionCode?: string | null }, deducteeCode = '02'): { section: string; code: string } | null {
+  const name = (n.name ?? '').toLowerCase()
+  if (n.collectionCode) {
+    const tcs: Record<string, [string, string]> = {
+      A: ['394(1) Sl. 1', '1068'], I: ['394(1) Sl. 2', '1069'], B: ['394(1) Sl. 3', '1070'], C: ['394(1) Sl. 3', '1071'], D: ['394(1) Sl. 3', '1072'],
+      E: ['394(1) Sl. 4', '1073'], J: ['394(1) Sl. 5', '1074'], L: ['394(1) Sl. 6.D(a)', '1075'],
+    }
+    const t = tcs[n.collectionCode.toUpperCase()]
+    return t ? { section: t[0], code: t[1] } : null
+  }
+  const individual = deducteeCode === '02'
+  switch (n.section.toUpperCase()) {
+    case '194C': return individual ? { section: '393(1) Sl. 6(i).D(a)', code: '1023' } : { section: '393(1) Sl. 6(i).D(b)', code: '1024' }
+    case '194J': return /technical|royalty|call cent/.test(name) ? { section: '393(1) Sl. 6(iii).D(a)', code: '1026' } : { section: '393(1) Sl. 6(iii).D(b)', code: '1027' }
+    case '194I': return /plant|machinery/.test(name) ? { section: '393(1) Sl. 2(ii).D(a)', code: '1008' } : { section: '393(1) Sl. 2(ii).D(b)', code: '1009' }
+    case '194H': return { section: '393(1) Sl. 1(ii)', code: '1006' }
+    case '194D': return { section: '393(1) Sl. 1(i)', code: '1005' }
+    case '194A': return { section: '393(1) Sl. 5(iii)', code: '1022' }
+    case '193': return { section: '393(1) Sl. 5(i)', code: '1019' }
+    case '194Q': return { section: '393(1) Sl. 8(ii)', code: '1031' }
+    case '194O': return { section: '393(1) Sl. 8(v)', code: '1035' }
+    case '194R': return { section: '393(1) Sl. 8(iv)', code: '1033' }
+    case '194T': return { section: '393(3) Sl. 7', code: '1067' }
+    case '195': return { section: '393(2) Sl. 17', code: '1057' }
+    default: return null
+  }
+}
+
 /** The deductee (or collectee) sheet of a return, as the government's Return Preparation Utility lays it out. */
 export interface ReturnSheetInput {
   form: '26Q' | '27Q' | '27EQ'
   deductions: { deducteeCode: string; pan: string; name: string; section: string; collectionCode: string | null; country: string | null; date: string; amount: number
     tds: number; rate: number; challan: { serial: number; bsrCode: string | null; challanNo: string | null; challanDate: string } | null
-    reason?: string | null; certificateNo?: string | null; special?: 'certificate' | 'dtaa' | null }[]
+    reason?: string | null; certificateNo?: string | null; special?: 'certificate' | 'dtaa' | null; nature?: string }[]
+  fyStart?: string // from 2026-04-01 the sheet adds the Income-tax Act 2025's section and payment code
 }
 export function returnSheet(r: ReturnSheetInput) {
   const dmy = (d: string | null | undefined) => (d ? `${d.slice(8, 10)}/${d.slice(5, 7)}/${d.slice(0, 4)}` : '')
   const tcs = r.form === '27EQ'
+  const newAct = !!r.fyStart && r.fyStart >= '2026-04-01'
   const head = [
     tcs ? 'Collectee code' : 'Deductee code', tcs ? 'PAN of collectee' : 'PAN of deductee', tcs ? 'Name of collectee' : 'Name of deductee',
     ...(tcs ? ['Collection code'] : ['Section']), ...(r.form === '27Q' ? ['Country of residence'] : []),
     tcs ? 'Date of receipt/debit' : 'Date of payment/credit', tcs ? 'Amount received/debited' : 'Amount paid/credited', tcs ? 'TCS' : 'TDS', 'Rate (%)',
     tcs ? 'Date of collection' : 'Date of deduction', 'Challan serial', 'BSR code', 'Challan number', 'Date of deposit',
     'Reason for lower/higher deduction', 'Certificate number', ...(r.form === '27Q' ? ['Rate as per (IT Act / DTAA)'] : []),
+    ...(newAct ? ['Section (Income-tax Act 2025)', 'Payment code'] : []),
   ]
   const rows = r.deductions.map((d) => [
     d.deducteeCode, d.pan, d.name, tcs ? (d.collectionCode ?? '') : d.section, ...(r.form === '27Q' ? [d.country ?? ''] : []),
     dmy(d.date), (d.amount / 100).toFixed(2), (d.tds / 100).toFixed(2), (d.rate / 100).toFixed(2),
     dmy(d.date), d.challan?.serial ?? '', d.challan?.bsrCode ?? '', d.challan?.challanNo ?? '', dmy(d.challan?.challanDate),
     d.reason ?? '', d.certificateNo ?? '', ...(r.form === '27Q' ? [d.special === 'dtaa' ? 'DTAA' : 'IT Act'] : []),
+    ...(newAct ? (() => { const a = act2025({ section: d.section, name: d.nature, collectionCode: tcs ? d.collectionCode : null }, d.deducteeCode); return [a?.section ?? '', a?.code ?? ''] })() : []),
   ])
   return { head, rows }
 }

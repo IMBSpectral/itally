@@ -347,7 +347,7 @@ export async function quarterlyReturn(companyId: number, fyStart: string, quarte
       const c = matched.get(l)
       return {
         deducteeCode: deducteeCode(l.deducteeType), pan: l.pan ?? 'PANNOTAVBL', name: l.party, section: l.section, collectionCode: l.collectionCode, country: l.country,
-        date: l.date, amount: l.amount, tds: l.deducted, rate: l.rate, docNo: l.docNo, voucherId: l.voucherId,
+        date: l.date, amount: l.amount, tds: l.deducted, rate: l.rate, docNo: l.docNo, voucherId: l.voucherId, nature: l.nature,
         // the return's reason code: A, a lower or no deduction on a certificate; C, the higher rate without a PAN
         reason: l.special === 'certificate' ? 'A' : !l.pan && l.kind === 'TDS' ? 'C' : null, certificateNo: l.certificateNo ?? null, special: l.special ?? null,
         challan: c ? { serial: c.serial, bsrCode: c.challan?.bsrCode ?? null, challanNo: c.challan?.challanNo ?? null, challanDate: c.challan?.challanDate ?? c.date } : null,
