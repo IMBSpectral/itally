@@ -39,7 +39,7 @@ export function VoucherTypeProvider({ voucherTypeId, voucherId, children }: { vo
   useEffect(() => {
     if (existing?.voucherTypeId) setDocNo(existing.docNo ?? '')
   }, [existing])
-  const today = new Date().toISOString().slice(0, 10)
+  const today = new Date().toLocaleDateString('en-CA')
   const last = def?.counters?.[def.restartYearly ? fyStartOf(today, company.fyStart) : '1900-01-01']
   const next = last === undefined ? (def?.startNumber ?? 1) : last + 1
   return (
@@ -92,7 +92,7 @@ export function VoucherTypeForm({ id }: { id?: number }) {
     return `Voucher type "${f.name}" saved`
   })
   const used = id ? (types?.find((x) => x.id === id)?.used ?? 0) : 0
-  const sample = formatDocNo({ prefix: f.prefix, suffix: f.suffix, width: Number(f.width) || 0 }, Number(f.startNumber) || 1, new Date().toISOString().slice(0, 10), company.fyStart)
+  const sample = formatDocNo({ prefix: f.prefix, suffix: f.suffix, width: Number(f.width) || 0 }, Number(f.startNumber) || 1, new Date().toLocaleDateString('en-CA'), company.fyStart)
   return (
     <form className="form" onSubmit={submit} onKeyDown={enterAdvances}>
       <Title right={ok && <span className="ok">{ok}</span>}>{id ? 'Voucher Type Alteration' : 'Voucher Type Creation'}</Title>

@@ -703,7 +703,7 @@ export function StatutoryPaymentView() {
   const { data, error } = useLoad(() => api.statutoryDues(company.id, period, kind), [company.id, period, version, kind])
   const { data: ledgers } = useLoad(() => api.ledgers(company.id, period), [company.id, version])
   const [bankId, setBankId] = useState<number | null>(null)
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10))
+  const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'))
   const { errors, ok, submit } = useSubmit(async () => {
     if (!data?.total) throw new ApiError('Nothing is due for this period', ['Nothing is due for this period'])
     if (!bankId) throw new ApiError('Choose the bank or cash ledger it is paid from', ['Choose the bank or cash ledger it is paid from'])
@@ -875,7 +875,7 @@ export function PayrollVoucher({ id }: { id?: number }) {
   const { data } = usePayroll()
   const { data: ledgers } = useLoad(() => api.ledgers(company.id, period), [company.id, appVersion])
   // today, kept inside the period
-  const today = new Date().toISOString().slice(0, 10)
+  const today = new Date().toLocaleDateString('en-CA')
   const start = today < period.from ? period.from : today > period.to ? period.to : today
   const [date, setDate] = useState(start)
   const [range, setRange] = useState(() => monthOf(start))

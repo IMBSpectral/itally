@@ -8,7 +8,7 @@ const asOfNote = (asOf: string) => <span className="muted">as on {fmtDate(asOf)}
 /** Outstandings are as on today (like Tally), unless the period ends earlier. */
 function useAsOf() {
   const { period } = useApp()
-  const today = new Date().toISOString().slice(0, 10)
+  const today = new Date().toLocaleDateString('en-CA')
   return { from: period.from, to: today < period.to ? (today < period.from ? period.from : today) : period.to }
 }
 

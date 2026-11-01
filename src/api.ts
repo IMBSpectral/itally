@@ -544,6 +544,18 @@ export const api = {
   eDocument: (c: number, voucherId: number) => call<EDocument>('GET', `/companies/${c}/vouchers/${voucherId}/e-document`),
   saveEDocument: (c: number, voucherId: number, body: Partial<EDocRecord>) => call<EDocRecord>('PUT', `/companies/${c}/vouchers/${voucherId}/e-document`, body),
   gspSettings: (c: number) => call<GspSettings | null>('GET', `/companies/${c}/gsp/settings`),
+  moneyMap: (c: number, days: number, reserve: number) => call<MoneyMap>('GET', `/companies/${c}/money-map?days=${days}&reserve=${reserve}`),
+  review: (c: number) => call<{ open: ReviewItem[]; decided: (ReviewItem & { status: string })[] }>('GET', `/companies/${c}/review`),
+  decide: (c: number, key: string, status: 'dismissed' | 'done' | 'open') => call<void>('PUT', `/companies/${c}/review`, { key, status }),
+  collectionDrafts: (c: number) => call<{ ledgerId: number; party: string; total: number; bills: number; text: string }[]>('GET', `/companies/${c}/collection-drafts`),
+  agents: (c: number) => call<{ kind: string; name: string; purpose: string; mode: string; active: boolean; schedule: string; lastRun: string | null; lastResult: string | null }[]>(
+    'GET', `/companies/${c}/agents`),
+  setAgent: (c: number, kind: string, b: { active: boolean; schedule: string }) => call<void>('PUT', `/companies/${c}/agents/${kind}`, b),
+  runAgent: (c: number, kind: string) => call<{ result: string }>('POST', `/companies/${c}/agents/${kind}/run`, {}),
+  agentLog: (c: number) => call<{ id: number; kind: string; at: string; result: string }[]>('GET', `/companies/${c}/agents/log`),
+  aiSettings: (c: number) => call<{ enabled: boolean; apiKeySet: boolean }>('GET', `/companies/${c}/ai/settings`),
+  setAiSettings: (c: number, b: { enabled: boolean; apiKey: string | null }) => call<void>('PUT', `/companies/${c}/ai/settings`, b),
+  aiAsk: (c: number, b: { question: string; title: string; text: string }) => call<{ answer: string; model: string }>('POST', `/companies/${c}/ai/ask`, b),
   setGspSettings: (c: number, b: GspSettingsInput) => call<void>('PUT', `/companies/${c}/gsp/settings`, b),
   gspTest: (c: number) => call<{ einvoice: string; eway: string }>('POST', `/companies/${c}/gsp/test`, {}),
   gspLog: (c: number) => call<{ id: number; at: string; system: string; action: string; ok: boolean; message: string; voucherId: number | null }[]>('GET', `/companies/${c}/gsp/log`),
@@ -1483,4 +1495,28 @@ export type GspSettings = Omit<GspSettingsInput, 'clientSecret' | 'einvoicePassw
   clientSecretSet: boolean
   einvoicePasswordSet: boolean
   ewayPasswordSet: boolean
+}
+
+/** A check over the books, waiting for a person to look at it. */
+export interface ReviewItem {
+  key: string
+  kind: 'duplicate' | 'bank' | 'overdue' | 'gst' | 'gstr2b' | 'einvoice' | 'cash'
+  severity: 'high' | 'medium' | 'low'
+  title: string
+  detail: string
+  open?: { screen: 'voucher'; type: string; id: number } | { screen: 'ledger'; id: number } | { screen: 'reconciliation'; id: number } | { screen: 'gstr2b' } | { screen: 'e-documents' }
+}
+export interface MoneyMap {
+  asOf: string
+  until: string
+  cashNow: number
+  cash: number
+  bank: number
+  expected: number
+  planned: number
+  projected: number
+  headroom: number
+  collections: { party: string; amount: number; dueDate: string }[]
+  payments: { what: string; amount: number }[]
+  priority: { ledgerId: number; party: string; bill: string; dueDate: string; amount: number; overdueDays: number; reason: string }[]
 }

@@ -46,6 +46,7 @@ import { EditHistoryView, EditLogView } from './screens/EditLog'
 import { DataScreen } from './screens/Data'
 import { exportScreen, VoucherPrint } from './screens/Print'
 import { ActiveCtx, fmtDate } from './ui'
+import { AgentsView, AiAssistPanel, AiSettingsForm, MoneyMapView, ReviewView } from './screens/Intelligence'
 
 export type Screen =
   | { k: 'gateway' }
@@ -130,6 +131,10 @@ export type Screen =
   | { k: 'stock-ageing' }
   | { k: 'e-documents' }
   | { k: 'gsp-settings' }
+  | { k: 'money-map' }
+  | { k: 'review' }
+  | { k: 'agents' }
+  | { k: 'ai-settings' }
   | { k: 'voucher-type'; id?: number }
   | { k: 'pick-voucher-type' }
   | { k: 'gst-classification'; id?: number }
@@ -228,7 +233,7 @@ interface Ctx {
 export function newVoucherDate(period: Period, config: AppConfig) {
   const last = config.voucherDate === 'last' ? config.lastVoucherDate : null
   if (last && last >= period.from && last <= period.to) return last
-  const now = new Date().toISOString().slice(0, 10)
+  const now = new Date().toLocaleDateString('en-CA')
   return now >= period.from && now <= period.to ? now : period.from
 }
 
@@ -299,6 +304,7 @@ export function App() {
   const [user, setUser] = useState<User | null>(null)
   const [features, setFeatures] = useState<Record<string, boolean>>({})
   const [config, setConfig] = useState<AppConfig>(CONFIG_DEFAULTS)
+  const [assist, setAssist] = useState(false)
   const [language, setLanguageState] = useState<Lang>(lang())
   const setLanguage = useCallback((l: Lang) => {
     setLang(l)
@@ -412,6 +418,12 @@ export function App() {
       if (e.key === 'Escape' || (e.ctrlKey && (e.key === 'q' || e.key === 'Q'))) {
         e.preventDefault()
         pop()
+        return
+      }
+      // Ctrl+Space: AI Assist about the screen underneath
+      if (e.ctrlKey && e.code === 'Space') {
+        e.preventDefault()
+        setAssist((x) => !x)
         return
       }
       if (moveInReport(e)) return
@@ -563,10 +575,12 @@ export function App() {
           <span><b>Enter</b> {t('Open')}</span>
           <span><b>Esc</b> {t('Back')}</span>
           <span><b>Ctrl+A</b> {t('Accept')}</span>
+          <span><b>Ctrl+Space</b> AI Assist</span>
           <span className="spacer" />
           <span><b>Q</b> {t('Quit')}</span>
         </footer>
       </div>
+      {assist && <AiAssistPanel onClose={() => setAssist(false)} />}
       {signIn && <SignIn company={signIn} over onDone={(u) => enter(signIn, u)} onCancel={closeCompany} />}
     </AppCtx.Provider>
   )
@@ -760,6 +774,14 @@ function render(s: Screen) {
       return <CompanyDetailsForm />
     case 'gsp-settings':
       return <GspSettingsForm />
+    case 'money-map':
+      return <MoneyMapView />
+    case 'review':
+      return <ReviewView />
+    case 'agents':
+      return <AgentsView />
+    case 'ai-settings':
+      return <AiSettingsForm />
     case 'mail-settings':
       return <MailSettingsForm />
     case 'mail-log':

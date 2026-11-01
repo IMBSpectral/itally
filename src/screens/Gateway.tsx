@@ -2,6 +2,7 @@ import { useApp, VOUCHER_FEATURE, VOUCHER_KEYS } from '../App'
 import { fmtDate, Menu, useLoad, type MenuItem } from '../ui'
 import { t } from '../i18n'
 import { api } from '../api'
+import { ReviewBanner } from './Intelligence'
 
 /**
  * Gateway of Tally and its sub-menus. Letters follow TallyPrime's own menu definitions
@@ -11,7 +12,7 @@ import { api } from '../api'
 export function Gateway() {
   const { push, closeCompany, features, company, period, config } = useApp()
   const pl = features.incomeExpenditure ? 'Income & Expenditure A/c' : 'Profit & Loss A/c'
-  const today = new Date().toISOString().slice(0, 10)
+  const today = new Date().toLocaleDateString('en-CA') // this computer's date, not UTC's
   return (
     <div className="gateway">
       <div className="glance">
@@ -31,6 +32,7 @@ export function Gateway() {
           <div className="label">{t('Date of Last Entry')}</div>
           <div className="value">{config.lastVoucherDate ? fmtDate(config.lastVoucherDate) : '—'}</div>
         </div>
+        <div className="wide"><ReviewBanner /></div>
       </div>
       <div className="panel">
         <div className="panel-title">{t('Home')}</div>
@@ -51,6 +53,10 @@ export function Gateway() {
             { label: 'Ratio Analysis', hotkey: 'R', onPick: () => push({ k: 'ratios' }) },
             { label: 'Dashboard', hotkey: 'G', onPick: () => push({ k: 'dashboard' }) },
             { label: 'Display More Reports', hotkey: 'D', onPick: () => push({ k: 'menu', menu: 'display' }) },
+            { heading: 'Intelligence' },
+            { label: 'Money Map', hotkey: 'M', onPick: () => push({ k: 'money-map' }) },
+            { label: 'AI Suggestions', hotkey: 'I', onPick: () => push({ k: 'review' }) },
+            { label: 'Agents & Automations', hotkey: 'T', onPick: () => push({ k: 'agents' }) },
             { heading: '' },
             { label: 'Quit', hotkey: 'Q', onPick: closeCompany },
           ], features)}
@@ -246,6 +252,7 @@ export function SubMenu({ menu }: { menu: MenuName }) {
       { label: 'GST Registration', feature: 'gst', hotkey: 'G', onPick: () => push({ k: 'gst-registration' }) },
       { label: 'TDS Details', feature: 'tds', hotkey: 'T', onPick: () => push({ k: 'tds-details' }) },
       { label: 'GSP: e-Invoice and e-Way Bill API', feature: 'edocs', hotkey: 'I', onPick: () => push({ k: 'gsp-settings' }) },
+      { label: 'AI Assist', hotkey: 'A', onPick: () => push({ k: 'ai-settings' }) },
       { heading: 'Details' },
       { label: 'Features (F11)', hotkey: 'F', onPick: () => push({ k: 'features' }) },
       { label: 'Company Details', hotkey: 'D', onPick: () => push({ k: 'company-details' }) },

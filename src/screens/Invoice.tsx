@@ -49,7 +49,7 @@ export function qtyField(q: number, u?: QtyUnit): string {
   const rest = abs - whole * per
   return rest ? `${whole}-${formatQty(rest, u.decimals ?? 0).replace(/,/g, '')}` : String(whole)
 }
-export const today = () => new Date().toISOString().slice(0, 10)
+export const today = () => new Date().toLocaleDateString('en-CA')
 
 /** The voucher types that carry items, and the ledger group their items are booked to. */
 const ITEM_LEDGER_GROUP: Partial<Record<VoucherType, string>> = {

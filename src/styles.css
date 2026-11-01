@@ -357,3 +357,28 @@ fieldset.mailing { border: 1px solid var(--line); padding: 6px 10px; display: gr
 .forex-amount input.amount { width: 110px; }
 .forex-amount input.rate { width: 80px; }
 .report .sub-row td { font-size: 12px; color: var(--muted); }
+
+/* Intelligence: the cash bridge, review priorities, the review line on Home, the AI Assist panel */
+.bridge { display: flex; align-items: stretch; gap: 10px; margin: 6px 0 4px; flex-wrap: wrap; }
+.bridge .op { align-self: center; font-size: 22px; color: var(--muted); }
+.bridge-tile { flex: 1; min-width: 150px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px; text-align: center; }
+.bridge-tile .label { color: var(--muted); font-size: 12px; }
+.bridge-tile .value { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.bridge-tile.in { background: color-mix(in srgb, #2f6fd6 8%, var(--panel)); }
+.bridge-tile.out { background: color-mix(in srgb, var(--err) 9%, var(--panel)); }
+.bridge-tile.out .value { color: var(--err); }
+.bridge-tile.ok { background: color-mix(in srgb, var(--ok) 9%, var(--panel)); }
+.bridge-tile.ok .value { color: var(--ok); }
+.badge.sev-high { background: var(--err); }
+.badge.sev-medium { background: #b7791f; }
+.badge.sev-low { background: var(--muted); }
+td.warn, .warn { color: var(--err); }
+.review-banner { width: 100%; text-align: left; border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); background: var(--sel); color: var(--ink); border-radius: var(--radius); padding: 10px 12px; }
+.ai-panel { position: fixed; right: 18px; bottom: 50px; width: min(460px, calc(100vw - 32px)); max-height: 70vh; display: flex; flex-direction: column; gap: 8px; z-index: 30;
+  background: var(--panel); border: 1px solid var(--accent); border-radius: 10px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18); padding: 12px; }
+.ai-head { display: flex; align-items: center; gap: 10px; }
+.ai-head b { color: var(--accent); }
+.ai-head button { margin-left: auto; }
+.ai-thread { overflow: auto; display: flex; flex-direction: column; gap: 6px; }
+.ai-q { margin: 0; font-weight: 600; }
+.ai-a { margin: 0 0 6px; background: var(--bar); border-radius: 6px; padding: 8px 10px; }

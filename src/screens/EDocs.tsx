@@ -60,7 +60,7 @@ export function EDocRegisterView() {
       const ready = data.vouchers.filter((v) => (kind === 'einvoice' ? v.einvoice.needed && !v.einvoice.irn : v.eway.needed && !v.eway.ewbNo) && !v[kind].problems.length)
       const ids = ticked.size ? [...ticked] : ready.map((v) => v.voucherId)
       if (!ids.length) return setErrors([`Nothing to upload: no ${kind === 'einvoice' ? 'e-Invoice' : 'e-Way Bill'} is due and ready (Space ticks vouchers)`])
-      const stamp = new Date().toISOString().slice(0, 10)
+      const stamp = new Date().toLocaleDateString('en-CA')
       ;(kind === 'einvoice' ? api.eInvoiceFile(company.id, ids) : api.eWayBillFile(company.id, ids))
         .then((file) => {
           const name = `${kind === 'einvoice' ? 'e-Invoice' : 'e-Way-Bill'}_${stamp}_${ids.length}.json`

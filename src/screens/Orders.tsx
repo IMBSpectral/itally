@@ -19,7 +19,7 @@ const TITLES: Record<PendingType, string> = {
 export function PendingView({ type }: { type: PendingType }) {
   const { company, period, version, push } = useApp()
   // as on the period's end, or today while that is still ahead (nothing is overdue in the future)
-  const today = new Date().toISOString().slice(0, 10)
+  const today = new Date().toLocaleDateString('en-CA')
   const asOf = period.to < today ? period.to : today
   const { data, error } = useLoad(() => api.pending(company.id, type, { asOf }), [company.id, type, asOf, version])
   if (error) return <Errors errors={[error]} />
