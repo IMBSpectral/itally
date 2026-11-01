@@ -81,7 +81,7 @@ export function MailSettingsForm() {
     return 'Saved'
   })
   const test = useSubmit(async () => {
-    await api.sendMail(company.id, { to: [f.fromAddress], subject: `Test from Spectral Tally: ${company.name}`, html: '<p>E-mail from Spectral Tally works.</p>' })
+    await api.sendMail(company.id, { to: [f.fromAddress], subject: `Test from Saral: ${company.name}`, html: '<p>E-mail from Saral works.</p>' })
     return `Test sent to ${f.fromAddress}`
   })
   return (

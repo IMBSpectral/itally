@@ -42,7 +42,7 @@ export function TallyAuditView() {
   const s = data.summary
   return (
     <div>
-      <Title right={periodNote(data)}>Tally Audit</Title>
+      <Title right={periodNote(data)}>Voucher Audit</Title>
       <p>
         {s.total} vouchers · <b>{s.notAudited}</b> not audited · {s.audited} audited · {s.underObservation} under observation · <b className={s.alteredAfterAudit ? 'errors-inline' : ''}>{s.alteredAfterAudit}</b> altered after audit
         {user ? <span className="muted"> · auditing as {user.username}</span> : null}

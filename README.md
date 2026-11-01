@@ -1,8 +1,10 @@
-# Spectral Tally
+# Saral
 
-A keyboard-first double-entry accounting app in the style of TallyPrime: companies, a chart of
-groups and ledgers, eight voucher types, live balances, and the core reports. It also has an XML
-gateway that speaks Tally's integration format. All code here is original. The design follows
+Saral is a keyboard-first double-entry accounting app for Indian businesses: companies, a chart of
+groups and ledgers, vouchers, live balances, GST, TDS, payroll and inventory. People who know
+TallyPrime find the keys and menus they expect, and its XML gateway reads and writes Tally's
+integration format, so books move across. Saral is not affiliated with Tally Solutions; Tally and
+TallyPrime are their trademarks. All code here is original. The design follows
 what the TallyPrime install could be shown to do (see "Design notes").
 
 ## Running it
@@ -295,7 +297,7 @@ in your books, for example
 
 ## Hindi
 
-- **Language** (F12, *Language (this computer)*): Hindi or English for the Gateway of Tally, every menu, screen titles and the button bar; each computer keeps its own choice. Hotkeys stay the English letters, shown beside the Hindi words. Terms like GSTR-1 and TDS stay as they are.
+- **Language** (F12, *Language (this computer)*): Hindi or English for the Home menu, every menu, screen titles and the button bar; each computer keeps its own choice. Hotkeys stay the English letters, shown beside the Hindi words. Terms like GSTR-1 and TDS stay as they are.
 - **Transliteration**: with the screens in Hindi, the **अ** button by a ledger, group or stock item's name writes what was typed in Roman letters in Devanagari, ITRANS-style: *Sharma* शर्मा, *Raam* राम, *Shree Ganesh* श्री गनेश, *kShetra* for क्ष.
 - Field labels, column headings, section headings and buttons on forms and reports follow too; table cells, entries and selections are never changed, so the books' own names stay as entered. Long statutory titles (GSTR tables, PF/ESI terms) stay in English.
 

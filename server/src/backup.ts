@@ -383,10 +383,10 @@ function readBackup(file: Buffer): Backup {
     const text = (file[0] === 0x1f && file[1] === 0x8b ? gunzipSync(file) : file).toString('utf8')
     json = JSON.parse(text)
   } catch {
-    throw new ValidationError(['This is not a Spectral Tally backup file'])
+    throw new ValidationError(['This is not a Saral backup file'])
   }
   const b = json as Backup
-  if (b?.format !== BACKUP_FORMAT) throw new ValidationError(['This is not a Spectral Tally backup file'])
+  if (b?.format !== BACKUP_FORMAT) throw new ValidationError(['This is not a Saral backup file'])
   if (b.version > BACKUP_VERSION) throw new ValidationError([`This backup is from a newer version (${b.version}); update the app first`])
   return b
 }

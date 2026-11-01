@@ -52,7 +52,7 @@ const delta = (now, before) => {
   return d === 0 ? '  (=)' : `  (${d > 0 ? '+' : ''}${d.toFixed(1)} pts)`
 }
 
-console.log(`\nSPECTRAL TALLY vs TALLYPRIME — ${features.length} features from the installed TallyPrime`)
+console.log(`\nSARAL vs TALLYPRIME — ${features.length} features from the installed TallyPrime`)
 console.log('='.repeat(78))
 console.log(`TALLY PARITY: ${Math.round(overall.weighted * 100)}%   (all TallyPrime features, weighted by how often they are used)`)
 console.log('-'.repeat(78))

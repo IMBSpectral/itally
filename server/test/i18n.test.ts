@@ -7,7 +7,7 @@ test('the screens in Hindi; what has no translation stays as it is', () => {
   assert.equal(t('Balance Sheet'), 'Balance Sheet')
   setLang('hi')
   assert.equal(t('Balance Sheet'), 'तुलन पत्र')
-  assert.equal(t('Gateway of Tally'), 'टैली का गेटवे')
+  assert.equal(t('Home'), 'होम')
   assert.equal(t('GSTR-1'), 'GSTR-1')
   setLang('en')
   assert.equal(t('Day Book'), 'Day Book')

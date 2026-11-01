@@ -28,7 +28,7 @@ export function setLang(l: Lang) {
 
 const HI: Record<string, string> = {
   // the Gateway of Tally and its sections
-  'Gateway of Tally': 'टैली का गेटवे', Masters: 'मास्टर्स', Create: 'बनाएँ', Alter: 'बदलें', 'Chart of Accounts': 'खातों की सूची', Transactions: 'लेन-देन',
+  Home: 'होम', 'Current Period': 'चालू अवधि', 'Current Date': 'आज की तिथि', 'Name of Company': 'कंपनी का नाम', 'Date of Last Entry': 'अंतिम प्रविष्टि की तिथि', Open: 'खोलें', Masters: 'मास्टर्स', Create: 'बनाएँ', Alter: 'बदलें', 'Chart of Accounts': 'खातों की सूची', Transactions: 'लेन-देन',
   Vouchers: 'वाउचर', 'Day Book': 'दैनिक बही', Banking: 'बैंकिंग', Reports: 'रिपोर्ट', 'Balance Sheet': 'तुलन पत्र', 'Profit & Loss A/c': 'लाभ-हानि खाता',
   'Stock Summary': 'स्टॉक सारांश', 'Ratio Analysis': 'अनुपात विश्लेषण', Dashboard: 'डैशबोर्ड', 'Display More Reports': 'और रिपोर्ट देखें', Quit: 'बाहर निकलें',
   'Master Creation': 'मास्टर बनाएँ', 'Master Alteration': 'मास्टर बदलें', 'Change Voucher Type': 'वाउचर प्रकार बदलें', Company: 'कंपनी',

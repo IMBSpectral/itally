@@ -1,5 +1,5 @@
 import { useApp, VOUCHER_FEATURE, VOUCHER_KEYS } from '../App'
-import { Menu, useLoad, type MenuItem } from '../ui'
+import { fmtDate, Menu, useLoad, type MenuItem } from '../ui'
 import { t } from '../i18n'
 import { api } from '../api'
 
@@ -9,12 +9,31 @@ import { api } from '../api'
  * so a Tally user's keystrokes work unchanged.
  */
 export function Gateway() {
-  const { push, closeCompany, features } = useApp()
+  const { push, closeCompany, features, company, period, config } = useApp()
   const pl = features.incomeExpenditure ? 'Income & Expenditure A/c' : 'Profit & Loss A/c'
+  const today = new Date().toISOString().slice(0, 10)
   return (
     <div className="gateway">
+      <div className="glance">
+        <div>
+          <div className="label">{t('Current Period')}</div>
+          <div className="value">{fmtDate(period.from)} to {fmtDate(period.to)}</div>
+        </div>
+        <div>
+          <div className="label">{t('Current Date')}</div>
+          <div className="value">{new Date(today + 'T00:00:00').toLocaleDateString('en-IN', { weekday: 'long' })}, {fmtDate(today)}</div>
+        </div>
+        <div>
+          <div className="label">{t('Name of Company')}</div>
+          <div className="value">{company.name}</div>
+        </div>
+        <div>
+          <div className="label">{t('Date of Last Entry')}</div>
+          <div className="value">{config.lastVoucherDate ? fmtDate(config.lastVoucherDate) : '—'}</div>
+        </div>
+      </div>
       <div className="panel">
-        <div className="panel-title">{t('Gateway of Tally')}</div>
+        <div className="panel-title">{t('Home')}</div>
         <Menu
           items={featureItems([
             { heading: 'Masters' },
@@ -161,7 +180,7 @@ export function SubMenu({ menu }: { menu: MenuName }) {
       { label: 'Job Work Reports', feature: 'jobWork', hotkey: 'J', onPick: () => push({ k: 'job-work' }) },
       { heading: '' },
       { label: 'Budget Variance', hotkey: 'B', onPick: () => push({ k: 'pick-budget', next: 'variance' }) },
-      { label: 'Tally Audit', hotkey: 'U', onPick: () => push({ k: 'tally-audit' }) },
+      { label: 'Voucher Audit', hotkey: 'U', onPick: () => push({ k: 'tally-audit' }) },
       { label: 'Cost Tracking', feature: 'costTracking', hotkey: 'K', onPick: () => push({ k: 'cost-tracks' }) },
       { label: 'Exception Reports', hotkey: 'X', onPick: () => push({ k: 'menu', menu: 'exceptions' }) },
       { label: 'Edit Log', hotkey: 'L', onPick: () => push({ k: 'edit-log' }) },

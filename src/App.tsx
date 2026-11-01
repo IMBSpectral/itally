@@ -495,7 +495,10 @@ export function App() {
     <AppCtx.Provider value={ctx}>
       <div className="shell">
         <header className="topbar">
-          <span className="brand">Spectral Tally</span>
+          <span className="brand">
+            <span className="brand-mark" aria-hidden="true">स</span>Saral
+          </span>
+          <span className="sep" />
           <span className="co">{company.name}</span>
           {user && (
             <span className="muted-on-band">
@@ -506,8 +509,8 @@ export function App() {
             change
           </button>
           <span className="spacer" />
-          <span>
-            Period: {fmtDate(period.from)} to {fmtDate(period.to)}
+          <span className="muted-on-band">
+            {t('Period')}: {fmtDate(period.from)} to {fmtDate(period.to)}
           </span>
         </header>
         <main className="body">
@@ -518,6 +521,7 @@ export function App() {
             </section>
           ))}
           <aside className="buttonbar">
+            <div className="rail-heading">{t('Company')}</div>
             <button onClick={() => push({ k: 'period' })}>
               <b>Alt+F2</b> {t('Period')}
             </button>
@@ -538,6 +542,7 @@ export function App() {
             >
               <b>Alt+M</b> {t('E-mail')}
             </button>
+            <div className="rail-heading">{t('Vouchers')}</div>
             {VOUCHER_KEYS.filter((v) => v.key && voucherInUse(v.type, features)).map((v) => (
               <button key={v.label} onClick={() => push({ k: 'voucher', type: v.type })}>
                 <b>{v.label.split(' ')[0]}</b> {t(v.type)}
@@ -553,6 +558,13 @@ export function App() {
             )}
           </aside>
         </main>
+        <footer className="keybar">
+          <span><b>Enter</b> {t('Open')}</span>
+          <span><b>Esc</b> {t('Back')}</span>
+          <span><b>Ctrl+A</b> {t('Accept')}</span>
+          <span className="spacer" />
+          <span><b>Q</b> {t('Quit')}</span>
+        </footer>
       </div>
       {signIn && <SignIn company={signIn} over onDone={(u) => enter(signIn, u)} onCancel={closeCompany} />}
     </AppCtx.Provider>

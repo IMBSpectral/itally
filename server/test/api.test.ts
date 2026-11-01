@@ -117,14 +117,14 @@ test('desktop mode: serves the built front end, with API paths still JSON', asyn
   const { tmpdir } = await import('node:os')
   const path = await import('node:path')
   const dir = await mkdtemp(path.join(tmpdir(), 'tally-static-'))
-  await writeFile(path.join(dir, 'index.html'), '<!doctype html><title>Spectral Tally</title>')
+  await writeFile(path.join(dir, 'index.html'), '<!doctype html><title>Saral</title>')
   await writeFile(path.join(dir, 'app.js'), 'console.log(1)')
   const s = createApp(dir).listen(0)
   const at = `http://localhost:${(s.address() as AddressInfo).port}`
   try {
-    assert.match(await (await fetch(at + '/')).text(), /Spectral Tally/)
+    assert.match(await (await fetch(at + '/')).text(), /Saral/)
     assert.equal(await (await fetch(at + '/app.js')).text(), 'console.log(1)')
-    assert.match(await (await fetch(at + '/some/screen')).text(), /Spectral Tally/) // falls back to the app
+    assert.match(await (await fetch(at + '/some/screen')).text(), /Saral/) // falls back to the app
     const api = await fetch(at + '/api/nope')
     assert.equal(api.status, 404)
     assert.deepEqual(await api.json(), { error: 'Not found' })
