@@ -7,6 +7,9 @@ import { z } from 'zod'
 import { ValidationError } from '../books'
 import { eDocRegister, edocInput, edocStatus, EINVOICE_TYPES, saveEDocument } from '../edocs'
 import { einvoiceJson, einvoiceProblems, ewayBill, ewayBillFile, ewayProblems } from '../engine/edocs'
+import { cancelEwayBill, cancelIrn, generateEwayBill, generateIrn, gspLog, gspSettings, setGspSettings, testGsp, updateVehicle } from '../gsp'
+import { getCompany } from '../books'
+import { pool } from '../db'
 
 type Period = { from: string; to: string }
 const text = z.string().nullish()
@@ -56,6 +59,52 @@ export function addEDocRoutes(company: Router, cid: (req: Request) => number, pe
     if (errors.length) throw new ValidationError(errors)
     res.setHeader('content-disposition', `attachment; filename="e-invoice-${new Date().toISOString().slice(0, 10)}.json"`)
     res.json(docs)
+  })
+
+  // ---------------------------------------------------------------- through the API (GSP or NIC)
+  const reason = z.enum(['1', '2', '3', '4'])
+  company.get('/gsp/settings', async (req, res) => res.json(await gspSettings(cid(req))))
+  company.put('/gsp/settings', async (req, res) => {
+    const b = z.object({
+      environment: z.enum(['sandbox', 'production']), einvoiceBase: z.string(), ewayBase: z.string(), clientId: z.string(), clientSecret: z.string().optional(),
+      einvoiceUser: z.string(), einvoicePassword: z.string().optional(), ewayUser: z.string().nullish(), ewayPassword: z.string().nullish(),
+      publicKey: z.string(), ewayPublicKey: z.string().nullish(), extraHeaders: z.record(z.string(), z.string()).optional(),
+    }).parse(req.body)
+    await setGspSettings(cid(req), b)
+    res.status(204).end()
+  })
+  company.post('/gsp/test', async (req, res) => {
+    const c = (await getCompany(pool, cid(req)))!
+    if (!c.gstin) throw new ValidationError(['Set the company GSTIN first'])
+    res.json(await testGsp(cid(req), c.gstin))
+  })
+  company.get('/gsp/log', async (req, res) => res.json(await gspLog(cid(req))))
+  company.post('/vouchers/:id/irn', async (req, res) => res.json(await generateIrn(cid(req), Number(req.params.id))))
+  company.post('/vouchers/:id/irn/cancel', async (req, res) => {
+    const b = z.object({ reason, remark: z.string().default('') }).parse(req.body)
+    res.json(await cancelIrn(cid(req), Number(req.params.id), b.reason, b.remark))
+  })
+  company.post('/vouchers/:id/ewb', async (req, res) => res.json(await generateEwayBill(cid(req), Number(req.params.id))))
+  company.post('/vouchers/:id/ewb/cancel', async (req, res) => {
+    const b = z.object({ reason, remark: z.string().default('') }).parse(req.body)
+    res.json(await cancelEwayBill(cid(req), Number(req.params.id), b.reason, b.remark))
+  })
+  company.post('/vouchers/:id/ewb/vehicle', async (req, res) => {
+    const b = z.object({ vehicleNo: z.string().min(4), fromPlace: z.string().min(1), fromState: z.string().regex(/^\d{1,2}$/), reason, remark: z.string().default('') }).parse(req.body)
+    res.json(await updateVehicle(cid(req), Number(req.params.id), b))
+  })
+  /** Generate the IRNs (and, where due, e-Way Bills) of many vouchers; each succeeds or fails on its own. */
+  company.post('/e-documents/generate', async (req, res) => {
+    const b = z.object({ ids: z.array(z.number().int().positive()).min(1), what: z.enum(['irn', 'ewb']) }).parse(req.body)
+    const out = []
+    for (const id of b.ids) {
+      try {
+        out.push({ id, ok: true, record: b.what === 'irn' ? await generateIrn(cid(req), id) : await generateEwayBill(cid(req), id) })
+      } catch (e) {
+        out.push({ id, ok: false, errors: (e as ValidationError).errors ?? [String(e)] })
+      }
+    }
+    res.json(out)
   })
 
   /** The e-Way Bill portal's bulk upload. */
