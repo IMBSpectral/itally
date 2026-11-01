@@ -51,6 +51,7 @@ import { addBudgetRoutes } from './budgets'
 import { scenarioView } from '../budgets'
 import { DEDUCTEE_TYPES } from '../engine/tds'
 import { addEDocRoutes } from './edocs'
+import { addIntelligenceRoutes } from './intelligence'
 import { addMailRoutes } from './mail'
 import { addVoucherTypeRoutes } from './vouchertypes'
 import { addCostCentreRoutes } from './costcentres'
@@ -537,6 +538,7 @@ company.put('/config', async (req, res) => {
 })
 addBudgetRoutes(company, cid, period)
 addEDocRoutes(company, cid, period)
+addIntelligenceRoutes(company, cid)
 addMailRoutes(company, cid)
 addVoucherTypeRoutes(company, cid, period)
 addCostCentreRoutes(company, cid, period)
