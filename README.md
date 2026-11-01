@@ -278,6 +278,24 @@ in your books, for example
 - A party whose country is not India is a non-resident: its TDS (the 195 nature is added) goes on **Form 27Q** (TDS Reports, **7**, with the country), not on 26Q.
 - **Challan Reconciliation** (TDS or TCS Reports, **R**): every payment of TDS and TCS in the period, what the deductions and collections account for and what is unallocated; type the BSR code, challan number and date of each and save them together with Ctrl+A.
 
+## e-Invoice and e-Way Bill through the API (GSP or NIC)
+
+- **Alt+K, GSP: e-Invoice and e-Way Bill API**: the API addresses, client id and secret, the e-Invoice and e-Way Bill API users, the portal's public key and any headers your GSP adds; sandbox or production; **Test the connection**; a log of every call. Secrets are never shown again and never go into backups.
+- NIC's protocol: sign-in encrypted with the portal's RSA key, a session key (SEK) returned under a fresh AppKey, every call's data under the SEK (AES-256-ECB); the session is reused for six hours and renewed once when the portal says the token has expired.
+- On a voucher's e-document screen: **Generate IRN** (an invoice the IRP already has is fetched by its number), **Cancel IRN** (within 24 hours), **Generate e-Way Bill** (by IRN, or through the e-Way Bill system for purchases and the rest), **Update vehicle** (Part B), **Cancel e-Way Bill**. On the register: generate for the ticked vouchers, or every one due and ready.
+- Each GSP adds small variations of its own: check on its sandbox once the credentials arrive.
+
+## Intelligence
+
+- **Money Map** (Home, M): cash and bank now, the collections and payments falling due in the next 7 to 90 days (post-dated cheques included), the projected closing and the headroom after a reserve, and the payables in the order they fall due.
+- **AI Suggestions** (Home, I): checks over the books, each to be marked done or dismissed: possible duplicate vouchers, bank entries unreconciled after 15 days, collections over 60 days past due, GST problems on invoices, GSTR-2B mismatches, e-Invoices due and not generated, cash or bank below zero; and reminder drafts for overdue parties. Home shows how many items wait.
+- **Agents and Automations** (Home, T): the Bank Match, Collections, Voucher Review and Cash Planning assistants, each paused or active on a "daily HH:MM" or "weekdays HH:MM" schedule (India time), with a log. None of them posts, alters or pays.
+- **AI Assist** (Ctrl+Space, any screen): a question about the screen, answered by Claude (Anthropic, `claude-opus-5-5`, with server-side fallbacks if a request is declined) from the screen's text and a short summary of cash, dues and open review items. Off until switched on under Alt+K, AI Assist, with your own Anthropic API key (never shown again, never in backups).
+
+## TDS under the Income-tax Act 2025
+
+From tax year 2026-27 the Form 140, 144 and 143 sheets carry each deduction's section under the 2025 Act (section 393 or 394 with its table serial) and its payment code (194C becomes 393(1) Sl. 6(i), codes 1023 and 1024). Check the codes against the RPU's own list before filing.
+
 ## GST cess, MSME interest, payroll loans and the rest
 
 - **Cess**: a cess rate (%) on stock items and taxable ledgers; invoices work it out per line, suggest it on the Cess ledger and flag a wrong amount; GSTR-1 (and its portal file) carries `csamt`, GSTR-3B pays cess from cess credit only, the e-Invoice carries `CesRt`, `CesAmt` and `CesVal`.
@@ -390,10 +408,10 @@ in your books, for example
 
 ## Not built yet
 
-- Generating the IRN and e-Way Bill directly from the app (GSP/NIC API): needs your GSP or NIC API credentials; the JSON upload works without them
-- Filing returns directly (GSTR-1/3B/9/4) through a GSP: prepare here, upload or file on the portal
-- TDS: the FVU text file of Forms 140/144/143 (26Q/27Q/27EQ): use the CSV with the government's Return Preparation Utility, which makes and validates it; the 2025 Act's section codes on the standard natures (the 1961 Act's sections are shown)
+- Languages besides Hindi and English (Tally also offers Marathi, Gujarati, Bengali, Tamil, Telugu, Kannada and Malayalam): translations need a native speaker's review
+- TDS: the FVU text file of Forms 140/144/143: use the CSV with the government's Return Preparation Utility, which makes and validates it
 - Remote access through a relay (Tally.NET): host the server edition with HTTPS (`HOST`, `TLS_CERT`, `TLS_KEY`, a certificate of your own) to reach it from outside the office
-- Languages besides Hindi and English (Tally also offers Gujarati, Marathi, Tamil and others)
+- Filing GST returns directly (GSTR-1/3B/9/4) through a GSP: prepare here, upload or file on the portal
 - TDL customisation (Tally's own language for add-ons) is not supported
 - E-mailed PDFs are plain text layouts (Courier); the HTML in the message keeps the screen's look
+- The review queue's decisions and the assistants' settings are not in backups yet
