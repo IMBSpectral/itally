@@ -16,7 +16,9 @@ before(async () => {
   base = `http://localhost:${(server.address() as AddressInfo).port}/api`
 })
 after(async () => {
-  server.close()
+  // close every connection before the pool, so no request is left running against a closed pool
+  server.closeAllConnections()
+  await new Promise((r) => server.close(r))
   await pool.end()
 })
 const raw = async (method: string, path: string, body?: unknown) => {
