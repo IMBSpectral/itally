@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Saral",
+  "productName": "Books",
   "version": "0.1.0",
   "identifier": "com.imbspectral.tally",
   "build": {
@@ -10,7 +10,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "Saral",
+        "title": "Books",
         "width": 1280,
         "height": 820,
         "minWidth": 900,

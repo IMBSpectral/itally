@@ -496,7 +496,7 @@ export function App() {
       <div className="shell">
         <header className="topbar">
           <span className="brand">
-            <span className="brand-mark" aria-hidden="true">स</span>Saral
+            <span className="brand-mark" aria-hidden="true">B</span>Books
           </span>
           <span className="sep" />
           <span className="co">{company.name}</span>

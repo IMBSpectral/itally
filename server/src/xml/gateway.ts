@@ -706,7 +706,7 @@ export function createXmlApp() {
   app.disable('x-powered-by')
   // Tally clients often send text/xml, application/xml or no type at all
   app.use(express.text({ type: () => true, limit: '20mb' }))
-  app.get('/', (_req, res) => res.type('text/xml').send('<RESPONSE>Saral Server is Running</RESPONSE>'))
+  app.get('/', (_req, res) => res.type('text/xml').send('<RESPONSE>Books Server is Running</RESPONSE>'))
   app.post('/', async (req, res) => {
     res.type('text/xml; charset=utf-8').send(await handleXml(typeof req.body === 'string' ? req.body : ''))
   })

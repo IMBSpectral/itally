@@ -92,7 +92,7 @@ test('backup and restore: the restored company reads exactly like the original',
 test('restore refuses files that are not backups, and tampered books, without leaving anything behind', async () => {
   const { companyId } = await richCompany()
   const count = async () => (await pool.query(`SELECT count(*)::int n FROM companies`)).rows[0].n
-  await assert.rejects(restoreCompany(Buffer.from('hello')), /not a Saral backup/)
+  await assert.rejects(restoreCompany(Buffer.from('hello')), /not a Books backup/)
   await assert.rejects(restoreCompany(gzipSync(JSON.stringify({ format: 'spectral-tally-backup', version: 99 }))), /newer version/)
   const doc = JSON.parse(gunzipSync((await backupCompany(companyId)).file).toString('utf8'))
   doc.company.name += ' tampered'

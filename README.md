@@ -1,9 +1,9 @@
-# Saral
+# Books
 
-Saral is a keyboard-first double-entry accounting app for Indian businesses: companies, a chart of
+Books is a keyboard-first double-entry accounting app for Indian businesses: companies, a chart of
 groups and ledgers, vouchers, live balances, GST, TDS, payroll and inventory. People who know
 TallyPrime find the keys and menus they expect, and its XML gateway reads and writes Tally's
-integration format, so books move across. Saral is not affiliated with Tally Solutions; Tally and
+integration format, so books move across. Books is not affiliated with Tally Solutions; Tally and
 TallyPrime are their trademarks. All code here is original. The design follows
 what the TallyPrime install could be shown to do (see "Design notes").
 

@@ -23,7 +23,7 @@ export function CompanySelect({ onOpen }: { onOpen: (c: Company) => void }) {
 
   return (
     <div className="company-select">
-      <h1 className="wordmark">Saral</h1>
+      <h1 className="wordmark">Books</h1>
       {error && <Errors errors={[`Cannot reach the server: ${error}`]} />}
       {restore.picker}
       {restore.status && <p className="ok">{restore.status}</p>}
