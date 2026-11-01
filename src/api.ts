@@ -543,6 +543,18 @@ export const api = {
   eDocuments: (c: number, p: Period) => call<EDocRegister>('GET', `/companies/${c}/e-documents${q(p)}`),
   eDocument: (c: number, voucherId: number) => call<EDocument>('GET', `/companies/${c}/vouchers/${voucherId}/e-document`),
   saveEDocument: (c: number, voucherId: number, body: Partial<EDocRecord>) => call<EDocRecord>('PUT', `/companies/${c}/vouchers/${voucherId}/e-document`, body),
+  gspSettings: (c: number) => call<GspSettings | null>('GET', `/companies/${c}/gsp/settings`),
+  setGspSettings: (c: number, b: GspSettingsInput) => call<void>('PUT', `/companies/${c}/gsp/settings`, b),
+  gspTest: (c: number) => call<{ einvoice: string; eway: string }>('POST', `/companies/${c}/gsp/test`, {}),
+  gspLog: (c: number) => call<{ id: number; at: string; system: string; action: string; ok: boolean; message: string; voucherId: number | null }[]>('GET', `/companies/${c}/gsp/log`),
+  generateIrn: (c: number, id: number) => call<EDocRecord>('POST', `/companies/${c}/vouchers/${id}/irn`, {}),
+  cancelIrn: (c: number, id: number, reason: string, remark: string) => call<EDocRecord>('POST', `/companies/${c}/vouchers/${id}/irn/cancel`, { reason, remark }),
+  generateEwb: (c: number, id: number) => call<EDocRecord>('POST', `/companies/${c}/vouchers/${id}/ewb`, {}),
+  cancelEwb: (c: number, id: number, reason: string, remark: string) => call<EDocRecord>('POST', `/companies/${c}/vouchers/${id}/ewb/cancel`, { reason, remark }),
+  updateVehicle: (c: number, id: number, b: { vehicleNo: string; fromPlace: string; fromState: string; reason: string; remark: string }) =>
+    call<EDocRecord>('POST', `/companies/${c}/vouchers/${id}/ewb/vehicle`, b),
+  generateEDocs: (c: number, ids: number[], what: 'irn' | 'ewb') =>
+    call<{ id: number; ok: boolean; errors?: string[] }[]>('POST', `/companies/${c}/e-documents/generate`, { ids, what }),
   eInvoiceFile: (c: number, ids: number[]) => call<unknown[]>('GET', `/companies/${c}/e-invoice.json?ids=${ids.join(',')}`),
   eWayBillFile: (c: number, ids: number[]) => call<unknown>('GET', `/companies/${c}/e-way-bill.json?ids=${ids.join(',')}`),
   mailSettings: (c: number) => call<MailSettings | null>('GET', `/companies/${c}/mail/settings`),
@@ -1450,4 +1462,25 @@ export interface MsmeInterest {
   lines: { ledgerId: number; supplier: string; udyamNo: string | null; bill: string; billDate: string; dueDate: string; amount: number; unpaid: number; paidOn: string | null
     daysLate: number; interest: number }[]
   total: number
+}
+
+/** Access to the e-Invoice and e-Way Bill APIs (directly with NIC, or through a GSP). Secrets are only ever sent, never shown. */
+export interface GspSettingsInput {
+  environment: 'sandbox' | 'production'
+  einvoiceBase: string
+  ewayBase: string
+  clientId: string
+  clientSecret?: string
+  einvoiceUser: string
+  einvoicePassword?: string
+  ewayUser?: string | null
+  ewayPassword?: string | null
+  publicKey: string
+  ewayPublicKey?: string | null
+  extraHeaders?: Record<string, string>
+}
+export type GspSettings = Omit<GspSettingsInput, 'clientSecret' | 'einvoicePassword' | 'ewayPassword'> & {
+  clientSecretSet: boolean
+  einvoicePasswordSet: boolean
+  ewayPasswordSet: boolean
 }

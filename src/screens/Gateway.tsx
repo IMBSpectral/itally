@@ -245,6 +245,7 @@ export function SubMenu({ menu }: { menu: MenuName }) {
       { heading: 'Statutory' },
       { label: 'GST Registration', feature: 'gst', hotkey: 'G', onPick: () => push({ k: 'gst-registration' }) },
       { label: 'TDS Details', feature: 'tds', hotkey: 'T', onPick: () => push({ k: 'tds-details' }) },
+      { label: 'GSP: e-Invoice and e-Way Bill API', feature: 'edocs', hotkey: 'I', onPick: () => push({ k: 'gsp-settings' }) },
       { heading: 'Details' },
       { label: 'Features (F11)', hotkey: 'F', onPick: () => push({ k: 'features' }) },
       { label: 'Company Details', hotkey: 'D', onPick: () => push({ k: 'company-details' }) },

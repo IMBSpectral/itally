@@ -26,6 +26,32 @@ export function EDocRegisterView() {
   const [ticked, setTicked] = useState<Set<number>>(new Set())
   const [errors, setErrors] = useState<string[]>([])
   const [saved, setSaved] = useState('')
+  const { data: gsp } = useLoad(() => api.gspSettings(company.id), [company.id, version])
+  const { changed } = useApp()
+  const [busy, setBusy] = useState(false)
+  // through the API: the ticked vouchers, else every one due and ready; each succeeds or fails on its own
+  const generate = async (what: 'irn' | 'ewb') => {
+    if (!data) return
+    const kind = what === 'irn' ? 'einvoice' : 'eway'
+    const ready = data.vouchers.filter((v) => (kind === 'einvoice' ? v.einvoice.needed && !v.einvoice.irn : v.eway.needed && !v.eway.ewbNo) && !v[kind].problems.length)
+    const ids = ticked.size ? [...ticked] : ready.map((v) => v.voucherId)
+    if (!ids.length) return setErrors([`Nothing to generate: no ${what === 'irn' ? 'e-Invoice' : 'e-Way Bill'} is due and ready (Space ticks vouchers)`])
+    setBusy(true)
+    setErrors([])
+    try {
+      const r = await api.generateEDocs(company.id, ids, what)
+      const failed = r.filter((x) => !x.ok)
+      const number = (id: number) => { const v = data.vouchers.find((x) => x.voucherId === id); return v ? `${v.type} No. ${v.number}` : `voucher ${id}` }
+      setErrors(failed.flatMap((x) => (x.errors ?? []).map((e) => `${number(x.id)}: ${e}`)))
+      setSaved(`${r.length - failed.length} of ${r.length} ${what === 'irn' ? 'IRNs' : 'e-Way Bills'} generated`)
+      setTicked(new Set())
+      changed()
+    } catch (e) {
+      setErrors(messages(e))
+    } finally {
+      setBusy(false)
+    }
+  }
 
   useEffect(() => {
     if (!active || !data) return
@@ -74,7 +100,14 @@ export function EDocRegisterView() {
   return (
     <div>
       <Title right={<>{periodNote(data)} <span className="muted">· Space tick · Alt+J e-Invoice file · Alt+W e-Way Bill file</span></>}>e-Invoice and e-Way Bill</Title>
-      {saved && <p className="ok">Saved {saved}. Upload it on the portal, then enter what it gives back on each voucher (Enter).</p>}
+      {saved && <p className="ok">{/generated$/.test(saved) ? saved : `Saved ${saved}. Upload it on the portal, then enter what it gives back on each voucher (Enter).`}</p>}
+      {gsp && (
+        <div className="actions" style={{ justifyContent: 'flex-start' }}>
+          <button type="button" disabled={busy} onClick={() => generate('irn')}>Generate IRNs ({ticked.size || 'all ready'})</button>
+          <button type="button" disabled={busy} onClick={() => generate('ewb')}>Generate e-Way Bills ({ticked.size || 'all ready'})</button>
+          <span className="muted">through the API ({gsp.environment})</span>
+        </div>
+      )}
       <Errors errors={errors} />
       <table className="report">
         <thead>
@@ -111,7 +144,7 @@ export function EDocRegisterView() {
       </table>
       <p className="muted">
         e-Invoice: for invoices and notes to registered buyers and exports, once your turnover crosses the limit. e-Way Bill: goods worth more than ₹50,000 on the move.
-        Without a GSP account, upload the saved files on einvoice1.gst.gov.in and ewaybillgst.gov.in.
+        {gsp ? 'Generated through the API; the saved files remain for upload by hand.' : 'Without a GSP account, upload the saved files on einvoice1.gst.gov.in and ewaybillgst.gov.in (or set up the API: Alt+K, GSP).'}
       </p>
     </div>
   )
@@ -128,7 +161,17 @@ const MODES: [Transport['mode'], string][] = [
 export function EDocumentView({ voucherId }: { voucherId: number }) {
   const { company, version, changed } = useApp()
   const { data, error } = useLoad(() => api.eDocument(company.id, voucherId), [company.id, voucherId, version])
+  const { data: gsp } = useLoad(() => api.gspSettings(company.id), [company.id, version])
   const [f, setF] = useState<Record<string, string>>({})
+  const [apiErrors, setApiErrors] = useState<string[]>([])
+  const [apiOk, setApiOk] = useState('')
+  const [cancel, setCancel] = useState({ reason: '2', remark: '' })
+  const [vehicle, setVehicle] = useState({ vehicleNo: '', fromPlace: '', fromState: '', reason: '1', remark: '' })
+  const run = (what: string, p: () => Promise<unknown>) => {
+    setApiErrors([])
+    setApiOk('')
+    p().then(() => (setApiOk(what), changed()), (e) => setApiErrors(messages(e)))
+  }
   // the fields follow every load, so they show what was saved once the voucher reloads
   useEffect(() => {
     if (!data) return
@@ -183,6 +226,25 @@ export function EDocumentView({ voucherId }: { voucherId: number }) {
           </button>
         </p>
       )}
+      {gsp && (
+        <div className="actions" style={{ justifyContent: 'flex-start' }}>
+          {(!data.einvoice.irn || data.einvoice.cancelled) && data.einvoice.problems.length === 0 && (
+            <button type="button" className="primary" onClick={() => run('IRN generated', () => api.generateIrn(company.id, voucherId))}>Generate IRN</button>
+          )}
+          {data.einvoice.irn && !data.einvoice.cancelled && (
+            <>
+              <select value={cancel.reason} onChange={(e) => setCancel({ ...cancel, reason: e.target.value })} aria-label="Reason to cancel">
+                <option value="1">Duplicate</option>
+                <option value="2">Data entry mistake</option>
+                <option value="3">Order cancelled</option>
+                <option value="4">Other</option>
+              </select>
+              <input placeholder="Remark" value={cancel.remark} onChange={(e) => setCancel({ ...cancel, remark: e.target.value })} aria-label="Remark" />
+              <button type="button" onClick={() => run('IRN cancelled', () => api.cancelIrn(company.id, voucherId, cancel.reason, cancel.remark))}>Cancel IRN (within 24 hours)</button>
+            </>
+          )}
+        </div>
+      )}
       <div className="inline">
         {field('irn', 'IRN', { size: 66 })}
         {field('ackNo', 'Ack No.')}
@@ -230,6 +292,32 @@ export function EDocumentView({ voucherId }: { voucherId: number }) {
           </button>
         </p>
       )}
+      {gsp && (
+        <div className="actions" style={{ justifyContent: 'flex-start', flexWrap: 'wrap' }}>
+          {!data.eway.ewbNo && data.eway.problems.length === 0 && (
+            <button type="button" className="primary" onClick={() => run('e-Way Bill generated', () => api.generateEwb(company.id, voucherId))}>
+              Generate e-Way Bill{data.einvoice.irn && !data.einvoice.cancelled ? ' (by IRN)' : ''}
+            </button>
+          )}
+          {data.eway.ewbNo && (
+            <>
+              <input placeholder="New vehicle No." value={vehicle.vehicleNo} onChange={(e) => setVehicle({ ...vehicle, vehicleNo: e.target.value })} aria-label="New vehicle No." />
+              <input placeholder="From place" value={vehicle.fromPlace} onChange={(e) => setVehicle({ ...vehicle, fromPlace: e.target.value })} aria-label="From place" />
+              <input placeholder="State code" size={4} value={vehicle.fromState} onChange={(e) => setVehicle({ ...vehicle, fromState: e.target.value })} aria-label="From state code" />
+              <select value={vehicle.reason} onChange={(e) => setVehicle({ ...vehicle, reason: e.target.value })} aria-label="Reason for the new vehicle">
+                <option value="1">Breakdown</option>
+                <option value="2">Transhipment</option>
+                <option value="3">Others</option>
+                <option value="4">First time</option>
+              </select>
+              <button type="button" onClick={() => run('Vehicle updated', () => api.updateVehicle(company.id, voucherId, vehicle))}>Update vehicle (Part B)</button>
+              <button type="button" onClick={() => run('e-Way Bill cancelled', () => api.cancelEwb(company.id, voucherId, cancel.reason, cancel.remark))}>Cancel e-Way Bill</button>
+            </>
+          )}
+        </div>
+      )}
+      {apiOk && <p className="ok">{apiOk}</p>}
+      <Errors errors={apiErrors} />
       <div className="inline">
         {field('ewbNo', 'e-Way Bill No.', { inputMode: 'numeric' })}
         {field('ewbDate', 'Generated on')}
@@ -241,6 +329,98 @@ export function EDocumentView({ voucherId }: { voucherId: number }) {
           <b>Ctrl+A</b> Save
         </button>
       </div>
+    </form>
+  )
+}
+
+const NIC = {
+  sandbox: { einvoice: 'https://einv-apisandbox.nic.in', eway: 'https://ewb.nic.in' },
+  production: { einvoice: 'https://einv-api.nic.in', eway: 'https://ewb.nic.in' },
+}
+
+/** Alt+K, GSP: access to the e-Invoice and e-Way Bill APIs. Secrets are sent, never shown; blank keeps the saved one. */
+export function GspSettingsForm() {
+  const { company, version, changed } = useApp()
+  const { data } = useLoad(() => api.gspSettings(company.id), [company.id, version])
+  const { data: log } = useLoad(() => api.gspLog(company.id), [company.id, version])
+  const [f, setF] = useState({
+    environment: 'sandbox' as 'sandbox' | 'production', einvoiceBase: NIC.sandbox.einvoice, ewayBase: NIC.sandbox.eway, clientId: '', clientSecret: '', einvoiceUser: '', einvoicePassword: '',
+    ewayUser: '', ewayPassword: '', publicKey: '', ewayPublicKey: '', headers: '',
+  })
+  const [test, setTest] = useState<{ einvoice: string; eway: string } | null>(null)
+  useEffect(() => {
+    if (!data) return
+    setF((x) => ({ ...x, environment: data.environment, einvoiceBase: data.einvoiceBase, ewayBase: data.ewayBase, clientId: data.clientId, einvoiceUser: data.einvoiceUser,
+      ewayUser: data.ewayUser ?? '', publicKey: data.publicKey, ewayPublicKey: data.ewayPublicKey ?? '',
+      headers: Object.entries(data.extraHeaders ?? {}).map(([k, v]) => `${k}: ${v}`).join('\n') }))
+  }, [data])
+  const set = (k: keyof typeof f) => (e: { target: { value: string } }) => setF((x) => ({ ...x, [k]: e.target.value }))
+  const { errors, setErrors, ok, submit } = useSubmit(async () => {
+    const extraHeaders = Object.fromEntries(f.headers.split('\n').map((l) => l.trim()).filter(Boolean).map((l) => {
+      const i = l.indexOf(':')
+      if (i < 1) throw new ApiError('', [`"${l}" is not a header (name: value)`])
+      return [l.slice(0, i).trim(), l.slice(i + 1).trim()]
+    }))
+    await api.setGspSettings(company.id, { ...f, extraHeaders, ewayUser: f.ewayUser || null, ewayPassword: f.ewayPassword || null, ewayPublicKey: f.ewayPublicKey || null })
+    changed()
+    setF((x) => ({ ...x, clientSecret: '', einvoicePassword: '', ewayPassword: '' }))
+    return 'Saved. Test the connection next.'
+  })
+  const field = (k: keyof typeof f, label: string, extra: object = {}) => (
+    <label>{label}<input value={f[k]} onChange={set(k)} aria-label={label} {...extra} /></label>
+  )
+  const secret = (k: 'clientSecret' | 'einvoicePassword' | 'ewayPassword', label: string, isSet?: boolean) => (
+    <label>{label}<input type="password" autoComplete="new-password" value={f[k]} onChange={set(k)} placeholder={isSet ? 'saved (leave blank to keep)' : ''} aria-label={label} /></label>
+  )
+  return (
+    <form className="form wide" onSubmit={submit} onKeyDown={enterAdvances}>
+      <Title right={(ok && <span className="ok">{ok}</span>) || <span className="muted">Ctrl+A save</span>}>GSP: e-Invoice and e-Way Bill API</Title>
+      <p className="muted">
+        From your GSP (or NIC, for direct access): the API addresses, a client id and secret, the API user names and passwords you create on the e-Invoice and e-Way Bill
+        portals (API registration), and the portals' public key. Try the sandbox first.
+      </p>
+      <label>
+        Environment
+        <select value={f.environment} onChange={(e) => {
+          const env = e.target.value as 'sandbox' | 'production'
+          setF((x) => ({ ...x, environment: env, ...(Object.values(NIC).some((n) => n.einvoice === x.einvoiceBase) ? { einvoiceBase: NIC[env].einvoice, ewayBase: NIC[env].eway } : {}) }))
+        }} aria-label="Environment">
+          <option value="sandbox">Sandbox (testing)</option>
+          <option value="production">Production (live)</option>
+        </select>
+      </label>
+      {field('einvoiceBase', 'e-Invoice API address')}
+      {field('ewayBase', 'e-Way Bill API address')}
+      {field('clientId', 'Client id')}
+      {secret('clientSecret', 'Client secret', data?.clientSecretSet)}
+      {field('einvoiceUser', 'e-Invoice API user name')}
+      {secret('einvoicePassword', 'e-Invoice API password', data?.einvoicePasswordSet)}
+      {field('ewayUser', 'e-Way Bill API user name')}
+      {secret('ewayPassword', 'e-Way Bill API password', data?.ewayPasswordSet)}
+      <label>Public key (PEM, from the portal)<textarea rows={4} value={f.publicKey} onChange={set('publicKey')} placeholder="-----BEGIN PUBLIC KEY-----" aria-label="Public key" /></label>
+      <label>e-Way Bill public key, if different<textarea rows={3} value={f.ewayPublicKey} onChange={set('ewayPublicKey')} aria-label="e-Way Bill public key" /></label>
+      <label>Your GSP's own headers, one a line (name: value)<textarea rows={3} value={f.headers} onChange={set('headers')} placeholder="x-subscription-key: …" aria-label="GSP headers" /></label>
+      <Errors errors={errors} />
+      <div className="actions">
+        {data && (
+          <button type="button" onClick={() => api.gspTest(company.id).then((r) => (setTest(r), changed()), (e) => setErrors(messages(e)))}>Test the connection</button>
+        )}
+        <button type="submit" className="primary"><b>Ctrl+A</b> Save</button>
+      </div>
+      {test && <p>e-Invoice: <b>{test.einvoice}</b> · e-Way Bill: <b>{test.eway}</b></p>}
+      {log && log.length > 0 && (
+        <>
+          <h3 className="sub">Calls made</h3>
+          <table className="report">
+            <thead><tr><th>When</th><th>System</th><th>What</th><th>Result</th></tr></thead>
+            <tbody>
+              {log.slice(0, 50).map((l) => (
+                <tr key={l.id}><td>{l.at}</td><td>{l.system === 'einvoice' ? 'e-Invoice' : 'e-Way Bill'}</td><td>{l.action}</td><td className={l.ok ? '' : 'warn'}>{l.message}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
     </form>
   )
 }

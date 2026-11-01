@@ -19,7 +19,7 @@ import { DayBook } from './screens/DayBook'
 import { BalanceSheetView, ProfitLossView, TrialBalanceView } from './screens/Reports'
 import { PeriodScreen } from './screens/PeriodScreen'
 import { BillsView, GroupOutstandingView, LedgerOutstandingView, OutstandingPick } from './screens/Outstandings'
-import { EDocRegisterView, EDocumentView } from './screens/EDocs'
+import { EDocRegisterView, EDocumentView, GspSettingsForm } from './screens/EDocs'
 import { GstClassificationForm, GstClassificationPick } from './screens/Classifications'
 import { CurrencyForm, CurrencyPick, ForexGainLossView, RatesForm } from './screens/Forex'
 import {
@@ -129,6 +129,7 @@ export type Screen =
   | { k: 'dashboard' }
   | { k: 'stock-ageing' }
   | { k: 'e-documents' }
+  | { k: 'gsp-settings' }
   | { k: 'voucher-type'; id?: number }
   | { k: 'pick-voucher-type' }
   | { k: 'gst-classification'; id?: number }
@@ -757,6 +758,8 @@ function render(s: Screen) {
       return <EDocumentView voucherId={s.voucherId} />
     case 'company-details':
       return <CompanyDetailsForm />
+    case 'gsp-settings':
+      return <GspSettingsForm />
     case 'mail-settings':
       return <MailSettingsForm />
     case 'mail-log':
